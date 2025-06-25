@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(gameV3)
+set(CMAKE_CXX_STANDARD 17)
 
 # FetchContent added in CMake 3.11, downloads during the configure step
 include(FetchContent)
@@ -15,7 +16,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(raylib)
 
 # Define the executable
-add_executable(gameV3 src/main.cpp src/config.cpp src/screens.cpp)
+add_executable(gameV3 src/main.cpp src/config.cpp src/screens.cpp src/gameplay.cpp)
 
 # Link raylib
 target_link_libraries(gameV3 raylib)
