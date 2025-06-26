@@ -16,7 +16,6 @@ void mainGameLoop() {
             // Sleep
             if (userChoice == 1) {   
                 InputManager::resetInput();
-                std::cout << "1";
             }
             // Travel
             else if (userChoice == 2) {
@@ -39,8 +38,9 @@ void mainGameLoop() {
                 break;
             }
         }
+        EndDrawing();
     }
-    EndDrawing();
+
 } // End mainGameLoop
 
 // End gameplay.cpp

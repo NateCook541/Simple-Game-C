@@ -4,8 +4,6 @@
 #include "inputManager.h"
 
 void welcomeScreen() {
-    // Clear
-    ClearBackground(RAYWHITE);
     // Variables
     const char* welcomeText = "Welcome (Change later)";
     int textWidth = MeasureText(welcomeText, 20);
@@ -16,8 +14,6 @@ void welcomeScreen() {
 } // End welcomeScreen
 
 void enterStart() {
-    // Clear
-    ClearBackground(RAYWHITE);
     // Variables
     const char* enterText = "Hit enter to start";
     int textWidth = MeasureText(enterText, 20);
@@ -28,8 +24,6 @@ void enterStart() {
 } // End enterStart
 
 void displayMainOptions() {
-    // Clear
-    ClearBackground(RAYWHITE);
     // Display options and Enter
     DrawText("1. Sleep", 100, 100, 20, DARKGRAY);
     DrawText("2. Travel", 100, 130, 20, DARKGRAY);
@@ -42,8 +36,6 @@ void displayMainOptions() {
 } // End displayMainOptions
 
 void displayTravelOptions() {
-    // Clear
-    ClearBackground(RAYWHITE);
     // Display options and Enter
     DrawText("1. Lodge", 100, 100, 20, DARKGRAY);
     DrawText("2. Lodge sell", 100, 130, 20, DARKGRAY);
@@ -105,6 +97,7 @@ int getUserChoice() {
         // No valid input
         return 0;
     }
+    return 0;
 } // End getUserChoice
 
 // End screens.cpp

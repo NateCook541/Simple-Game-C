@@ -2,6 +2,11 @@
 #include "config.h"
 #include "screens.h"
 #include "gameplay.h"
+#include <iostream>
+
+// Global variable declarations
+int playerHealth = 3;
+int daysPassed = 0;
 
 void configureWindow() {
     InitWindow(screenWidth, screenHeight, "Game V3");
@@ -11,6 +16,7 @@ void configureWindow() {
 void startGame() {
     while (!WindowShouldClose()) {
         BeginDrawing();
+        ClearBackground(RAYWHITE);
         // Welcome
         welcomeScreen();
         enterStart();
