@@ -8,7 +8,7 @@ class CampingItems {
         bool owned;
     public:
         // Constructor
-        CampingItems();
+        CampingItems(std::string name, int price, bool owned);
         // Getters
         std::string getName() const;
         int getPrice() const;

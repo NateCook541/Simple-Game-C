@@ -6,7 +6,12 @@
 
 // Global variable declarations
 int playerHealth = 3;
+int playerHunger = 100;
+int playerThirst = 100;
+int playerMoney = 100;
 int daysPassed = 0;
+
+// Functions
 
 void configureWindow() {
     InitWindow(screenWidth, screenHeight, "Game V3");

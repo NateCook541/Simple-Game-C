@@ -2,9 +2,15 @@
 #include "gameplay.h"
 #include "screens.h"
 #include "inputManager.h"
+#include "campingItems.h"
+#include "sleep.h"
 #include <iostream>
 
 void mainGameLoop() {
+
+    // Create Items here
+    CampingItems tent("Tent", 25, false);
+    CampingItems cot("Cot", 15, false);
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -16,6 +22,7 @@ void mainGameLoop() {
             // Sleep
             if (userChoice == 1) {   
                 InputManager::resetInput();
+                sleep(tent, cot);
             }
             // Travel
             else if (userChoice == 2) {
