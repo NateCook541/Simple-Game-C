@@ -5,6 +5,7 @@
 #include "campingItems.h"
 #include "sleep.h"
 #include "config.h"
+#include "travel.h"
 #include <iostream>
 
 void mainGameLoop() {
@@ -28,6 +29,7 @@ void mainGameLoop() {
             // Travel
             else if (userChoice == 2) {
                 InputManager::resetInput();
+                travel(tent, cot);
             }
             // Eat
             else if (userChoice == 3) {
