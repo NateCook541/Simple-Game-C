@@ -5,7 +5,7 @@
 #include <iostream>
 
 // Global variable declarations
-int playerHealth = 3;
+int playerHealth = 100; // (TESTING)
 int playerHunger = 100;
 int playerThirst = 100;
 int playerMoney = 100;

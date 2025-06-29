@@ -2,6 +2,7 @@
 #include "screens.h"
 #include "config.h"
 #include "inputManager.h"
+#include <string>
 
 void welcomeScreen() {
     // Variables
@@ -48,56 +49,62 @@ void displayTravelOptions() {
 } // End displayTravelOptions
 
 int getUserChoice() {
-    // Variables to reset last input
-    static int lastPressed = 0;
-    static bool processed = false;
-    if (!processed) {
-        if (IsKeyPressed(KEY_ONE)) {
-            lastPressed = 1;
-            processed = true;
-            return 1;
-        }
-        if (IsKeyPressed(KEY_TWO)) {
-            lastPressed = 2;
-            processed = true;
-            return 2;
-        }
-        if (IsKeyPressed(KEY_THREE)) {
-            lastPressed = 3;
-            processed = true;
-            return 3;
-        }
-        if (IsKeyPressed(KEY_FOUR)) {
-            lastPressed = 4;
-            processed = true;
-            return 4;
-        }
-        if (IsKeyPressed(KEY_FIVE)) {
-            lastPressed = 5;
-            processed = true;
-            return 5;
-        }
-        if (IsKeyPressed(KEY_SIX)) {
-            lastPressed = 6;
-            processed = true;
-            return 6;
-        }
-        if (IsKeyPressed(KEY_SEVEN)) {
-            lastPressed = 7;
-            processed = true;
-            return 7;
-        }
-        // Reset when no key is pressed
-        if (!IsKeyPressed(KEY_ONE) && !IsKeyPressed(KEY_TWO) && !IsKeyPressed(KEY_THREE) &&
+    if (InputManager::isReady()) {
+        if (IsKeyPressed(KEY_ONE))  { InputManager::lastKey = 1; InputManager::markProcessed(); return 1; }
+        if (IsKeyPressed(KEY_TWO))  { InputManager::lastKey = 2; InputManager::markProcessed(); return 2; }
+        if (IsKeyPressed(KEY_THREE)){ InputManager::lastKey = 3; InputManager::markProcessed(); return 3; }
+        if (IsKeyPressed(KEY_FOUR)) { InputManager::lastKey = 4; InputManager::markProcessed(); return 4; }
+        if (IsKeyPressed(KEY_FIVE)) { InputManager::lastKey = 5; InputManager::markProcessed(); return 5; }
+        if (IsKeyPressed(KEY_SIX))  { InputManager::lastKey = 6; InputManager::markProcessed(); return 6; }
+        if (IsKeyPressed(KEY_SEVEN)){ InputManager::lastKey = 7; InputManager::markProcessed(); return 7; }
+    }
+    // Reset processed if no key is pressed
+    if (!IsKeyPressed(KEY_ONE) && !IsKeyPressed(KEY_TWO) && !IsKeyPressed(KEY_THREE) &&
         !IsKeyPressed(KEY_FOUR) && !IsKeyPressed(KEY_FIVE) && !IsKeyPressed(KEY_SIX) &&
-        !IsKeyPressed(KEY_SEVEN))
-        {
-            processed = false;
-        }
-        // No valid input
-        return 0;
+        !IsKeyPressed(KEY_SEVEN)) {
+        InputManager::processed = false;
     }
     return 0;
 } // End getUserChoice
+
+void displayStats() {
+    std::string healthText = "Health - " + std::to_string(playerHealth);
+    std::string hungerText = "Hunger - " + std::to_string(playerHunger);
+    std::string waterText = "Water - " + std::to_string(playerThirst);
+    std::string moneyText = "Money - " + std::to_string(playerMoney);
+    std::string passedText = "Days passed - " + std::to_string(daysPassed);
+
+    while (!WindowShouldClose()) {
+        ClearBackground(RAYWHITE);
+        DrawText(healthText.c_str(), 100, 100, 20, DARKGRAY);
+        DrawText(hungerText.c_str(), 100, 130, 20, DARKGRAY);
+        DrawText(waterText.c_str(), 100, 160, 20, DARKGRAY);
+        DrawText(moneyText.c_str(), 100, 190, 20, DARKGRAY);
+        DrawText(passedText.c_str(), 100, 220, 20, DARKGRAY);
+        DrawText("Press ENTER to go back...", 100, 275, 20, DARKGRAY);
+        if (IsKeyPressed(KEY_ENTER)) {
+            break;
+        }
+        EndDrawing();
+    }
+}
+
+void death() {
+    const char* deathText = "You have died. Game over!";
+    int textWidth = MeasureText(deathText, 20);
+    int textX = (screenWidth - textWidth) / 2;
+    int textY = (textX / 2);
+    DrawText(deathText, textX, textY, 20, DARKGRAY);
+} // End death
+
+void enterDeath() {
+    // Variables
+    const char* enterText = "Hit enter to quit";
+    int textWidth = MeasureText(enterText, 20);
+    int textX = (screenWidth - textWidth) / 2;
+    int textY = (textWidth / 2) + 80;
+    // Draw
+    DrawText(enterText, textX, textY, 20, DARKGRAY);
+} // End enterStart
 
 // End screens.cpp

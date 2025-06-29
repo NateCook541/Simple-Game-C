@@ -11,7 +11,12 @@ void displayTravelOptions();
 void displayLodgeBuyOptions();
 int getUserChoice();
 
+// Display stats and inventory
+void displayStats();
+
 // Ending screen
+void death();
+void enterDeath();
 
 // Stats screen
 

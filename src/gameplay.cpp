@@ -4,6 +4,7 @@
 #include "inputManager.h"
 #include "campingItems.h"
 #include "sleep.h"
+#include "config.h"
 #include <iostream>
 
 void mainGameLoop() {
@@ -35,6 +36,7 @@ void mainGameLoop() {
             // Display stats
             else if (userChoice == 4) {
                 InputManager::resetInput();
+                displayStats();
             }
             // Display inventory
             else if (userChoice == 5)  {
@@ -44,6 +46,21 @@ void mainGameLoop() {
             else if (userChoice == 7) {
                 break;
             }
+        }
+        // If player dies
+        if (playerHealth == 0 || playerHunger == 0 || playerThirst == 0) {
+            InputManager::resetInput();
+            while (!WindowShouldClose()) {
+                BeginDrawing();
+                ClearBackground(RAYWHITE);
+                death();
+                enterDeath();
+                EndDrawing();
+                if (IsKeyPressed(KEY_ENTER)) {
+                    break;
+                }
+            }
+            break;
         }
         EndDrawing();
     }
