@@ -49,6 +49,7 @@ void displayTravelOptions() {
 } // End displayTravelOptions
 
 int getUserChoice() {
+    // Check ready to accept input
     if (InputManager::isReady()) {
         if (IsKeyPressed(KEY_ONE))  { InputManager::lastKey = 1; InputManager::markProcessed(); return 1; }
         if (IsKeyPressed(KEY_TWO))  { InputManager::lastKey = 2; InputManager::markProcessed(); return 2; }
@@ -58,8 +59,9 @@ int getUserChoice() {
         if (IsKeyPressed(KEY_SIX))  { InputManager::lastKey = 6; InputManager::markProcessed(); return 6; }
         if (IsKeyPressed(KEY_SEVEN)){ InputManager::lastKey = 7; InputManager::markProcessed(); return 7; }
     }
-    // Reset processed if no key is pressed
-    if (!IsKeyPressed(KEY_ONE) && !IsKeyPressed(KEY_TWO) && !IsKeyPressed(KEY_THREE) &&
+    // Reset processed if currently processed and no keys are pressed
+    if (InputManager::processed && 
+        !IsKeyPressed(KEY_ONE) && !IsKeyPressed(KEY_TWO) && !IsKeyPressed(KEY_THREE) &&
         !IsKeyPressed(KEY_FOUR) && !IsKeyPressed(KEY_FIVE) && !IsKeyPressed(KEY_SIX) &&
         !IsKeyPressed(KEY_SEVEN)) {
         InputManager::processed = false;
@@ -87,7 +89,7 @@ void displayStats() {
         }
         EndDrawing();
     }
-}
+} // End displayStats
 
 void death() {
     const char* deathText = "You have died. Game over!";
@@ -106,5 +108,17 @@ void enterDeath() {
     // Draw
     DrawText(enterText, textX, textY, 20, DARKGRAY);
 } // End enterStart
+
+void displayLodgeBuyOptions() {
+    ClearBackground(RAYWHITE);
+    // Display the options
+    DrawText("1. Tent - 25$", 100, 100, 20, DARKGRAY);
+    DrawText("2. Cot - 15$", 100, 130, 20, DARKGRAY);
+    DrawText("3. Shit rod - 15$", 100, 160, 20, DARKGRAY);
+    DrawText("4. Good rod - 25$", 100, 190, 20, DARKGRAY);
+    DrawText("7. Back", 100, 280, 20, DARKGRAY);
+    // Prompt for user input
+    DrawText("Enter your choice: ", 100, 320, 20, DARKGRAY);
+} // End displayLodgeBuyOptions
 
 // End screens.cpp

@@ -2,20 +2,22 @@
 #include "campingItems.h"
 #include "screens.h"
 #include "inputManager.h"
+#include "lodge.h"
 
 void travel(CampingItems &tent, CampingItems &cot)
 {
-    int userChoice{};
+    int userChoice;
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         displayTravelOptions();
-        InputManager::resetInput();
         userChoice = getUserChoice();
         if (userChoice != 0) {
             // Lodge buy
             if (userChoice == 1) {
                 InputManager::resetInput();
+                lodgeBuy(tent, cot);
+                userChoice = 0;
             }
             // Fishing north
             else if (userChoice == 3) {
