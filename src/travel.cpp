@@ -3,6 +3,7 @@
 #include "screens.h"
 #include "inputManager.h"
 #include "lodge.h"
+#include "fishing.h"
 
 void travel(CampingItems &tent, CampingItems &cot)
 {
@@ -22,10 +23,14 @@ void travel(CampingItems &tent, CampingItems &cot)
             // Fishing north
             else if (userChoice == 3) {
                 InputManager::resetInput();
+                fishingNorth();
+                userChoice = 0;
             }
             // Fishing south
             else if (userChoice == 4) {
                 InputManager::resetInput();
+                fishingSouth();
+                userChoice = 0;
             }
             // Back
             else if (userChoice == 7) {
