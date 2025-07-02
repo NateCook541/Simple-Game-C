@@ -1,4 +1,7 @@
 #pragma once
+#include "campingItems.h"
+#include "fish.h"
 
-void fishingNorth();
-void fishingSouth();
+Fish fishingMiniGame();
+void fishingNorth(CampingItems& shitRod, CampingItems& goodRod);
+void fishingSouth(CampingItems& shitRod, CampingItems& goodRod);

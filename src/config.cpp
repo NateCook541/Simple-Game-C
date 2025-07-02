@@ -2,7 +2,9 @@
 #include "config.h"
 #include "screens.h"
 #include "gameplay.h"
+#include "animals.h"
 #include <iostream>
+#include <vector>
 
 // Global variable declarations
 int playerHealth = 100; // (TESTING)
@@ -10,6 +12,7 @@ int playerHunger = 100;
 int playerThirst = 100;
 int playerMoney = 100;
 int daysPassed = 0;
+std::vector <Animal>;
 
 // Functions
 

@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+#include "animals.h"
 
 // Config variables
 const int screenWidth = 800;
@@ -10,6 +12,7 @@ extern int playerHunger;
 extern int playerThirst;
 extern int playerMoney;
 extern int daysPassed;
+extern std::vector <Animal>;
 
 // Functions
 void configureWindow();
