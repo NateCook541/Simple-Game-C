@@ -7,12 +7,11 @@
 class Fish : public Animal {
     private:
         int length;
+        bool caught;
     public:
-        Fish(const std::string type, int w, int l) {
-            animalType = type;
-            weight = w;
-            length = l;
-        }
+        Fish() : Animal("", 0), length(0), caught(false) {}
+
+        Fish(const std::string& type, int w, int l) : Animal(type, w), length(l), caught(true) {}
 
         static Fish getFishType(int w, int l) {
             std::string fishTypes[] = {"Bass", "Trout", "Catfish", "Sturgeon"};
@@ -73,5 +72,21 @@ class Fish : public Animal {
             int weight = minWeight + (std::rand() % (maxWeight - minWeight + 1));
 
             return Fish::getFishType(weight, length);
+        }
+
+        bool getCaught() {
+            return caught;
+        }
+
+        int getWeight() {
+            return weight;
+        }
+
+        int getLength() {
+            return length;
+        }
+
+        std::string getType() {
+            return animalType;
         }
 };

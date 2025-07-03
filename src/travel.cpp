@@ -5,7 +5,7 @@
 #include "lodge.h"
 #include "fishing.h"
 
-void travel(CampingItems &tent, CampingItems &cot)
+void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, CampingItems& goodRod, CampingItems& map)
 {
     int userChoice;
     while (!WindowShouldClose()) {
@@ -23,14 +23,34 @@ void travel(CampingItems &tent, CampingItems &cot)
             // Fishing north
             else if (userChoice == 3) {
                 InputManager::resetInput();
-                fishingNorth();
+                fishingNorth(shitRod, goodRod);
                 userChoice = 0;
             }
             // Fishing south
             else if (userChoice == 4) {
-                InputManager::resetInput();
-                fishingSouth();
-                userChoice = 0;
+                if (map.getOwned() == false) {
+                    while (!WindowShouldClose()) {
+                        BeginDrawing();
+                        ClearBackground(RAYWHITE);
+
+                        std::string noMapText = "You do not own a map. You can buy one from the lodge.";
+                        std::string enterText = "Press ENTER to go back...";
+                        int textWidth = MeasureText(noMapText.c_str(), 20);
+                        int textX = (screenWidth - textWidth) / 2;
+
+                        DrawText(noMapText.c_str(), textX, 300, 20, DARKGRAY);
+                        DrawText(enterText.c_str(), textX, 350, 20, DARKGRAY);
+                        if (IsKeyPressed(KEY_ENTER)) {
+                            break;
+                        }
+                        EndDrawing();
+                    }
+                }
+                else {
+                    InputManager::resetInput();
+                    fishingSouth(shitRod, goodRod);
+                    userChoice = 0;
+                }
             }
             // Back
             else if (userChoice == 7) {
