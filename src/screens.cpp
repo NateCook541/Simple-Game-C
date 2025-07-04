@@ -58,26 +58,30 @@ int getUserChoice() {
         if (IsKeyPressed(KEY_FIVE)) { InputManager::lastKey = 5; InputManager::markProcessed(); return 5; }
         if (IsKeyPressed(KEY_SIX))  { InputManager::lastKey = 6; InputManager::markProcessed(); return 6; }
         if (IsKeyPressed(KEY_SEVEN)){ InputManager::lastKey = 7; InputManager::markProcessed(); return 7; }
+        if (IsKeyPressed(KEY_EIGHT))  { InputManager::lastKey = 8; InputManager::markProcessed(); return 8; }
+        if (IsKeyPressed(KEY_NINE)){ InputManager::lastKey = 9; InputManager::markProcessed(); return 9; }
     }
     // Reset processed if currently processed and no keys are pressed
     if (InputManager::processed && 
         !IsKeyPressed(KEY_ONE) && !IsKeyPressed(KEY_TWO) && !IsKeyPressed(KEY_THREE) &&
         !IsKeyPressed(KEY_FOUR) && !IsKeyPressed(KEY_FIVE) && !IsKeyPressed(KEY_SIX) &&
-        !IsKeyPressed(KEY_SEVEN)) {
+        !IsKeyPressed(KEY_SEVEN) && !IsKeyPressed(KEY_EIGHT) &&
+        !IsKeyPressed(KEY_NINE)) {
         InputManager::processed = false;
     }
     return 0;
 } // End getUserChoice
 
 void displayStats() {
-    std::string healthText = "Health - " + std::to_string(playerHealth);
-    std::string hungerText = "Hunger - " + std::to_string(playerHunger);
-    std::string waterText = "Water - " + std::to_string(playerThirst);
-    std::string moneyText = "Money - " + std::to_string(playerMoney);
-    std::string passedText = "Days passed - " + std::to_string(daysPassed);
-
     while (!WindowShouldClose()) {
+        std::string healthText = "Health - " + std::to_string(playerHealth);
+        std::string hungerText = "Hunger - " + std::to_string(playerHunger);
+        std::string waterText = "Water - " + std::to_string(playerThirst);
+        std::string moneyText = "Money - " + std::to_string(playerMoney);
+        std::string passedText = "Days passed - " + std::to_string(daysPassed);
+
         ClearBackground(RAYWHITE);
+        
         DrawText(healthText.c_str(), 100, 100, 20, DARKGRAY);
         DrawText(hungerText.c_str(), 100, 130, 20, DARKGRAY);
         DrawText(waterText.c_str(), 100, 160, 20, DARKGRAY);
@@ -116,9 +120,13 @@ void displayLodgeBuyOptions() {
     DrawText("2. Cot - 15$", 100, 130, 20, DARKGRAY);
     DrawText("3. Shit rod - 15$", 100, 160, 20, DARKGRAY);
     DrawText("4. Good rod - 25$", 100, 190, 20, DARKGRAY);
-    DrawText("7. Back", 100, 280, 20, DARKGRAY);
+    DrawText("5. Map - 10$", 100, 220, 20, DARKGRAY);
+    DrawText("6. Shit Rifle - 15$", 100, 250, 20, DARKGRAY);
+    DrawText("7. Good Rifle - 25$", 100, 280, 20, DARKGRAY);
+    DrawText("8. Lighter - 10$", 100, 310, 20, DARKGRAY);
+    DrawText("9. Back", 100, 340, 20, DARKGRAY);
     // Prompt for user input
-    DrawText("Enter your choice: ", 100, 320, 20, DARKGRAY);
+    DrawText("Enter your choice: ", 100, 420, 20, DARKGRAY);
 } // End displayLodgeBuyOptions
 
 // End screens.cpp

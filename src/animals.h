@@ -14,7 +14,7 @@ public:
         playerHunger += animalConvert.weight;
     }
     // Adds to the inventory if a fish/animal is caught
-    void addAnimalInventory(Animal& animalAdd) {
+    void addAnimalInventory(Animal* animalAdd) {
         animalInventory.push_back(animalAdd);
     }
 };

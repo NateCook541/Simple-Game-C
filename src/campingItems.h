@@ -17,9 +17,4 @@ class CampingItems {
         void setName(const std::string newName);
         void setPrice(const int newPrice);
         void setOwned(const bool newOwned);
-        // Public methods
-        // Remove money from player and set owned to true
-        void purchaseItem();
-        // Display item in raylib window
-        void displayItem();
 };

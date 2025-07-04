@@ -1,20 +1,20 @@
-#include "fishing.h"
-#include "fish.h"
+#include "hunting.h"
 #include "campingItems.h"
+#include "forestAnimals.h"
 #include "config.h"
 #include "raylib.h"
 #include <string>
 #include <vector>
 #include <random>
 
-Fish fishingMiniGame(CampingItems& shitRod, CampingItems& goodRod, bool northSouthFishing) {
+ForestAnimals huntingMiniGame(CampingItems& shitRifle, CampingItems& goodRifle, bool deepCloseWoods) {
     float currentProgress = 0.0f;
     float progressGoal = 100.0f;
     float timer = 10.0f;
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        DrawText("Press SPACE to catch the fish!", 100, 200, 20, DARKGRAY);
+        DrawText("Press SPACE to hunt the animal!", 100, 200, 20, DARKGRAY);
         if (IsKeyPressed(KEY_SPACE)) {
             currentProgress += 10.0f;
         }
@@ -26,36 +26,36 @@ Fish fishingMiniGame(CampingItems& shitRod, CampingItems& goodRod, bool northSou
         DrawText(timerText.c_str(), 100, 300, 20, DARKGRAY);
         
         if (currentProgress >= progressGoal) {
-            DrawText("You have caught the fish!", 100, 350, 20, GREEN);
+            DrawText("You have caught the Animal!", 100, 350, 20, GREEN);
             EndDrawing();
-            return Fish::createRandomFish(shitRod, goodRod, northSouthFishing);
+            return ForestAnimals::createRandomAnimal(shitRifle, goodRifle, deepCloseWoods);
         }
         else if (timer <= 0) {
-            DrawText("The fish got away.", 100, 350, 20, GREEN);
+            DrawText("The animal got away.", 100, 350, 20, GREEN);
             EndDrawing();
-            return Fish();
+            return ForestAnimals();
         }
         EndDrawing();
     }
 }
 
-void fishing(CampingItems& shitRod, CampingItems& goodRod, bool northSouth) {
-    // User has a good rod
-    if (goodRod.getOwned()) {
-        Fish caught = fishingMiniGame(shitRod, goodRod, northSouth);
-        // User catches a fish
+void hunting(CampingItems& shitRifle, CampingItems& goodRifle, bool deepCloseWoods) {
+    // User has a good rifle
+    if (goodRifle.getOwned()) {
+        ForestAnimals caught = huntingMiniGame(shitRifle, goodRifle, deepCloseWoods);
+        // User catches a animal
         if (caught.getCaught()) {
-            animalInventory.push_back(new Fish(caught));
+            animalInventory.push_back(new ForestAnimals(caught));
             while (!WindowShouldClose()) {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
-                std::string fishText = "You caught a " + caught.getType() + "! It weighs " 
+                std::string animalText = "You caught a " + caught.getType() + "! It weighs " 
                     + std::to_string(caught.getWeight()) + "lbs"
-                    + " and it is " + std::to_string(caught.getLength()) + "in long";
+                    + " and it is " + std::to_string(caught.getHeight()) + " tall";
 
-                int textWidth = MeasureText(fishText.c_str(), 20);
+                int textWidth = MeasureText(animalText.c_str(), 20);
                 int textX = (screenWidth - textWidth) / 2;
-                DrawText(fishText.c_str(), textX, 300, 20, DARKGRAY);
+                DrawText(animalText.c_str(), textX, 300, 20, DARKGRAY);
                 DrawText("Press ENTER to go back...", textX, 350, 20, DARKGRAY);
 
                 if (IsKeyPressed(KEY_ENTER)) {
@@ -64,13 +64,13 @@ void fishing(CampingItems& shitRod, CampingItems& goodRod, bool northSouth) {
                 EndDrawing();
             }
         }
-        // User does not catch a fish
+        // User does not catch a animal
         else {
             while (!WindowShouldClose()) {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                std::string noCatchText = "You have not caught a fish.";
+                std::string noCatchText = "You have not caught a animal.";
                 std::string enterText = "Press ENTER to go back...";
                 int textWidth = MeasureText(noCatchText.c_str(), 20);
                 int textX = (screenWidth - textWidth) / 2;
@@ -84,23 +84,23 @@ void fishing(CampingItems& shitRod, CampingItems& goodRod, bool northSouth) {
             }
         }
     }
-    // User has a bad rod
-    else if (shitRod.getOwned()) {
-        Fish caught = fishingMiniGame(shitRod, goodRod, northSouth);
-        // User catches a fish
+    // User has a bad rifle
+    else if (shitRifle.getOwned()) {
+        ForestAnimals caught = huntingMiniGame(shitRifle, goodRifle, deepCloseWoods);
+        // User catches a animal
         if (caught.getCaught()) {
-            animalInventory.push_back(new Fish(caught));
+            animalInventory.push_back(new ForestAnimals(caught));
             while (!WindowShouldClose()) {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                std::string fishText = "You caught a " + caught.getType() + "! It weighs " 
+                std::string animalText = "You caught a " + caught.getType() + "! It weighs " 
                     + std::to_string(caught.getWeight()) + "lbs"
-                    + " and it is " + std::to_string(caught.getLength()) + "in long";
-                int textWidth = MeasureText(fishText.c_str(), 20);
+                    + " and it is " + std::to_string(caught.getHeight()) + " tall";
+                int textWidth = MeasureText(animalText.c_str(), 20);
                 int textX = (screenWidth - textWidth) / 2;
 
-                DrawText(fishText.c_str(), textX, 300, 20, DARKGRAY);
+                DrawText(animalText.c_str(), textX, 300, 20, DARKGRAY);
                 DrawText("Press ENTER to go back...", textX, 350, 20, DARKGRAY);
                 if (IsKeyPressed(KEY_ENTER)) {
                     break;
@@ -108,13 +108,13 @@ void fishing(CampingItems& shitRod, CampingItems& goodRod, bool northSouth) {
                 EndDrawing();
             }
         }
-        // User does not catch a fish
+        // User does not catch a animal
         else {
             while (!WindowShouldClose()) {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                std::string noCatchText = "You have not caught a fish.";
+                std::string noCatchText = "You have not caught a animal.";
                 std::string enterText = "Press ENTER to go back...";
                 int textWidth = MeasureText(noCatchText.c_str(), 20);
                 int textX = (screenWidth - textWidth) / 2;
@@ -128,18 +128,18 @@ void fishing(CampingItems& shitRod, CampingItems& goodRod, bool northSouth) {
             }
         }
     }
-    // User does not own a rod
+    // User does not own a rifle
     else {
         while (!WindowShouldClose()) {
             BeginDrawing();
             ClearBackground(RAYWHITE);
 
-            std::string noRodText = "You do not own a fishing rod. You can buy one from the lodge.";
+            std::string noRifleText = "You do not own a rifle. You can buy one from the lodge.";
             std::string enterText = "Press ENTER to go back...";
 
-            int textWidth = MeasureText(noRodText.c_str(), 20);
+            int textWidth = MeasureText(noRifleText.c_str(), 20);
             int textX = (screenWidth - textWidth) / 2;
-            DrawText(noRodText.c_str(), textX, 300, 20, DARKGRAY);
+            DrawText(noRifleText.c_str(), textX, 300, 20, DARKGRAY);
             DrawText(enterText.c_str(), textX, 350, 20, DARKGRAY);
 
             if (IsKeyPressed(KEY_ENTER)) {

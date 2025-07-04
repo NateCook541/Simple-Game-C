@@ -6,7 +6,7 @@
 #include "lodge.h"
 #include <string>
 
-void lodgeBuy(CampingItems& tent, CampingItems& cot) {
+void lodgeBuy(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, CampingItems& goodRod, CampingItems& map, CampingItems& shitRifle, CampingItems& goodRifle, CampingItems& lighter) {
     int buyChoice = 0;
     InputManager::resetInput();
     int skipFrames = 5;
@@ -32,8 +32,44 @@ void lodgeBuy(CampingItems& tent, CampingItems& cot) {
                 InputManager::resetInput();
                 buyChoice = 0;
             }
-            // Back                            
+            // Shit Rod
+            else if (buyChoice == 3) {
+                purchaseScreen(shitRod, "Shit Rod");
+                InputManager::resetInput();
+                buyChoice = 0;
+            }
+            // Good Rod
+            else if (buyChoice == 4) {
+                purchaseScreen(goodRod, "Good Rod");
+                InputManager::resetInput();
+                buyChoice = 0;
+            }
+            // Map
+            else if (buyChoice == 5) {
+                purchaseScreen(map, "map");
+                InputManager::resetInput();
+                buyChoice = 0;
+            }
+            // Shit Rifle
+            else if (buyChoice == 6) {
+                purchaseScreen(shitRifle, "Shit Rifle");
+                InputManager::resetInput();
+                buyChoice = 0;
+            }
+            // Good Rifle
             else if (buyChoice == 7) {
+                purchaseScreen(goodRifle, "Good Rifle");
+                InputManager::resetInput();
+                buyChoice = 0;
+            }
+            // Lighter
+            else if (buyChoice == 8) {
+                purchaseScreen(lighter, "Lighter");
+                InputManager::resetInput();
+                buyChoice = 0;
+            }
+            // Back                            
+            else if (buyChoice == 9) {
                 InputManager::resetInput();
                 break;
             }

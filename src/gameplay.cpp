@@ -6,16 +6,36 @@
 #include "sleep.h"
 #include "config.h"
 #include "travel.h"
-#include <iostream>
+#include "eat.h"
+#include <string>
 
 void mainGameLoop() {
 
-    // Create Items here
+    // CREATE ITEMS HERE
+
+    // Sleeping items
     CampingItems tent("Tent", 25, false);
     CampingItems cot("Cot", 15, false);
+
+    // Fishing poles
     CampingItems shitRod("Shit Rod", 15, false);
     CampingItems goodRod("Good Rod", 25, false);
+
+    // Hunting rifles
+    CampingItems shitRifle("Shit Rifle", 15, false);
+    CampingItems goodRifle("Good Rifle", 25, false);
+
+    // Allows player to access south fishing and deep woods
     CampingItems map("Map", 10, false);
+
+    // Allows the player to light fires to cook food from animals
+    CampingItems lighter("Lighter", 10, false);
+
+    // Maybe a backpack system to cap how many animals a player can catch / hunt before they have to return to lodge / camp
+    CampingItems smallBackPack("Small Backpack", 15, false);
+    CampingItems largeBackPack("Large Backpack", 25, false);
+
+    // MAIN GAME LOOP
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -31,11 +51,12 @@ void mainGameLoop() {
             // Travel
             else if (userChoice == 2) {
                 InputManager::resetInput();
-                travel(tent, cot, shitRod, goodRod, map);
+                travel(tent, cot, shitRod, goodRod, map, shitRifle, goodRifle, lighter);
             }
             // Eat
             else if (userChoice == 3) {
                 InputManager::resetInput();
+                eat(lighter, animalInventory);
             }
             // Display stats
             else if (userChoice == 4) {

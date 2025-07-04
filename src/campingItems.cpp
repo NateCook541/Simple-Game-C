@@ -32,13 +32,3 @@ void CampingItems::setPrice(const int newPrice) {
 void CampingItems::setOwned(const bool newOwned) {
     owned = newOwned;
 }
-
-// Public methods
-
-void CampingItems::purchaseItem() {
-    playerMoney -= price;
-}
-
-void CampingItems::displayItem() {
-    //FIXME Add later LOL
-}

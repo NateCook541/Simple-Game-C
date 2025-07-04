@@ -12,7 +12,7 @@ int playerHunger = 100;
 int playerThirst = 100;
 int playerMoney = 100;
 int daysPassed = 0;
-std::vector<Animal> animalInventory;
+std::vector<Animal*> animalInventory;
 
 // Functions
 
