@@ -129,4 +129,13 @@ void displayLodgeBuyOptions() {
     DrawText("Enter your choice: ", 100, 420, 20, DARKGRAY);
 } // End displayLodgeBuyOptions
 
+void displayLodgeBuyOptionsTwo() {
+    ClearBackground(RAYWHITE);
+    // Display the options
+    DrawText("1. Lighter - 10$", 100, 100, 20, DARKGRAY);
+    DrawText("9. Back", 100, 340, 20, DARKGRAY);
+    // Prompt for user input
+    DrawText("Enter your choice: ", 100, 420, 20, DARKGRAY);
+} // End displayLodgeBuyOptions
+
 // End screens.cpp

@@ -9,6 +9,7 @@ void displayMainMenuArt();
 void displayMainOptions();
 void displayTravelOptions();
 void displayLodgeBuyOptions();
+void displayLodgeBuyOptionsTwo();
 int getUserChoice();
 
 // Display stats and inventory
