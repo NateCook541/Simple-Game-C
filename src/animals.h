@@ -9,6 +9,8 @@ protected:
     int weight;
 public:
     Animal(const std::string& type, int w) : animalType(type), weight(w) {}
+    // Virtual class to make it polymorphic
+    virtual ~Animal() {}
     // Converts food from fish/animal depending on weight
     void convertFood(Animal animalConvert) {
         playerHunger += animalConvert.weight;
@@ -16,5 +18,13 @@ public:
     // Adds to the inventory if a fish/animal is caught
     void addAnimalInventory(Animal* animalAdd) {
         animalInventory.push_back(animalAdd);
+    }
+    // Getter for fallback display
+    std::string getType() {
+        return animalType;
+    }
+    // Getter for fallback display
+    int getWeight() {
+        return weight;
     }
 };

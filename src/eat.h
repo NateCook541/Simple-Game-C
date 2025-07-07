@@ -2,4 +2,6 @@
 #include "animals.h"
 #include <vector>
 
-void eat(CampingItems& lighter, std::vector<Animal*> animalInventoryEat);
+bool cookMiniGame(CampingItems& lighter);
+void eatCook();
+void selectEatType(CampingItems& lighter);

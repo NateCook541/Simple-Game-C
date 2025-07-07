@@ -56,7 +56,7 @@ void mainGameLoop() {
             // Eat
             else if (userChoice == 3) {
                 InputManager::resetInput();
-                eat(lighter, animalInventory);
+                selectEatType(lighter);
             }
             // Display stats
             else if (userChoice == 4) {

@@ -3,7 +3,7 @@
 
 // Config variables
 const int screenWidth = 800;
-const int screenHeight = 450;
+const int screenHeight = 500;
 
 // Forward declaration
 class Animal;

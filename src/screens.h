@@ -10,6 +10,8 @@ void displayMainOptions();
 void displayTravelOptions();
 void displayLodgeBuyOptions();
 void displayLodgeBuyOptionsTwo();
+void displayEatCookEat();
+int getInventoryChoiceCook();
 int getUserChoice();
 
 // Display stats and inventory

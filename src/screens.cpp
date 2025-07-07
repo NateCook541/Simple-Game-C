@@ -2,6 +2,9 @@
 #include "screens.h"
 #include "config.h"
 #include "inputManager.h"
+#include "fish.h"
+#include "forestAnimals.h"
+#include "animals.h"
 #include <string>
 
 void welcomeScreen() {
@@ -125,6 +128,7 @@ void displayLodgeBuyOptions() {
     DrawText("7. Good Rifle - 25$", 100, 280, 20, DARKGRAY);
     DrawText("8. Lighter - 10$", 100, 310, 20, DARKGRAY);
     DrawText("9. Back", 100, 340, 20, DARKGRAY);
+    DrawText("Hit RIGHT ALT to switch between screens", 100, 440, 20, DARKGRAY);
     // Prompt for user input
     DrawText("Enter your choice: ", 100, 420, 20, DARKGRAY);
 } // End displayLodgeBuyOptions
@@ -132,10 +136,82 @@ void displayLodgeBuyOptions() {
 void displayLodgeBuyOptionsTwo() {
     ClearBackground(RAYWHITE);
     // Display the options
-    DrawText("1. Lighter - 10$", 100, 100, 20, DARKGRAY);
+    DrawText("1. Small backpack - 15$", 100, 100, 20, DARKGRAY);
+    DrawText("2. Large backpack - 25$", 100, 130, 20, DARKGRAY);
     DrawText("9. Back", 100, 340, 20, DARKGRAY);
+    DrawText("Hit RIGHT ALT to switch between screens", 100, 440, 20, DARKGRAY);
     // Prompt for user input
     DrawText("Enter your choice: ", 100, 420, 20, DARKGRAY);
 } // End displayLodgeBuyOptions
+
+void displayEatCookEat() {
+    ClearBackground(RAYWHITE);
+    // Display the options
+    DrawText("1. - Cook caught food", 100, 100, 20, DARKGRAY);
+    DrawText("2. - Eat purchased food", 100, 130, 20, DARKGRAY);
+    // Prompt for user input
+    DrawText("Enter your choice: ", 100, 420, 20, DARKGRAY);
+} // End displayEatCookEat
+
+int getInventoryChoiceCook() {
+    int page = 0;
+    const int itemsPerPage = 5;
+    int totalPages = (animalInventory.size() + itemsPerPage - 1) / itemsPerPage;
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        int y = 100;
+        int startIndex = page * itemsPerPage;
+        int endIndex = std::min(startIndex + itemsPerPage, (int)animalInventory.size());
+        
+        for (int i = startIndex; i < endIndex; ++i) {
+            std::string itemText = std::to_string(i - startIndex + 1) + ". ";
+
+            // Fish check
+            Fish* fish = dynamic_cast<Fish*>(animalInventory[i]);
+            if (fish) {
+                itemText += fish->getType() + " ("
+                    + std::to_string(fish->getWeight()) + " lbs, "
+                    + std::to_string(fish->getLength()) + " in)";
+            }
+            // Animal check
+            else {
+                ForestAnimals* animal = dynamic_cast<ForestAnimals*>(animalInventory[i]);
+                if (animal) {
+                    itemText += animal->getType() + " ("
+                        + std::to_string(animal->getWeight()) + " lbs, "
+                        + std::to_string(animal->getHeight()) + " in tall)";
+                } else {
+                    itemText += animalInventory[i]->getType() + " ("
+                        + std::to_string(animalInventory[i]->getWeight()) + " lbs)";
+                }
+            }
+            DrawText(itemText.c_str(), 100, y, 20, DARKGRAY);
+            y += 30;
+        }
+
+        std::string pageText = "Use LEFT/RIGHT to change page. 9 to cancel.";
+        DrawText(pageText.c_str(), 100, y + 20, 20, DARKGRAY);
+
+        EndDrawing();
+
+        int choice = getUserChoice();
+        if (choice >= 1 && choice <= (endIndex - startIndex)) {
+            return startIndex + (choice - 1);
+        }
+        else if (choice == 9) {
+            return -1;
+        }
+
+        if (IsKeyPressed(KEY_RIGHT) && page < totalPages - 1) {
+            page++;
+        }
+        else if (IsKeyPressed(KEY_LEFT) && page > 0) {
+            page--;
+        }
+    }
+    return -1;
+} // End getInventoryChoice
 
 // End screens.cpp
