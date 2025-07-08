@@ -37,6 +37,14 @@ void mainGameLoop() {
 
     // MAIN GAME LOOP
 
+    // WHAT TO ADD
+    // BACKPACK SYSTEM
+    // PURCHASABLE FOOD
+    // WATER / THIRST SYSTEM
+    // TRAVEL REWORK
+    // ADD STATS DECREASING PER DAY AND DEATH CHECKS FOR THEM AS WELL
+    // MORE ETC
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -66,6 +74,7 @@ void mainGameLoop() {
             // Display inventory
             else if (userChoice == 5)  {
                 InputManager::resetInput();
+                displayInventory(); // FIXME ADD DISPLAYING ITEMS
             }
             // Quit
             else if (userChoice == 7) {

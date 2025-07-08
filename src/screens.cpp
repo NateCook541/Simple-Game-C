@@ -7,6 +7,8 @@
 #include "animals.h"
 #include <string>
 
+// BASIC SCREENS
+
 void welcomeScreen() {
     // Variables
     const char* welcomeText = "Welcome (Change later)";
@@ -75,6 +77,26 @@ int getUserChoice() {
     return 0;
 } // End getUserChoice
 
+void death() {
+    const char* deathText = "You have died. Game over!";
+    int textWidth = MeasureText(deathText, 20);
+    int textX = (screenWidth - textWidth) / 2;
+    int textY = (textX / 2);
+    DrawText(deathText, textX, textY, 20, DARKGRAY);
+} // End death
+
+void enterDeath() {
+    // Variables
+    const char* enterText = "Hit enter to quit";
+    int textWidth = MeasureText(enterText, 20);
+    int textX = (screenWidth - textWidth) / 2;
+    int textY = (textWidth / 2) + 80;
+    // Draw
+    DrawText(enterText, textX, textY, 20, DARKGRAY);
+} // End enterStart
+
+// STATS
+
 void displayStats() {
     while (!WindowShouldClose()) {
         std::string healthText = "Health - " + std::to_string(playerHealth);
@@ -98,23 +120,7 @@ void displayStats() {
     }
 } // End displayStats
 
-void death() {
-    const char* deathText = "You have died. Game over!";
-    int textWidth = MeasureText(deathText, 20);
-    int textX = (screenWidth - textWidth) / 2;
-    int textY = (textX / 2);
-    DrawText(deathText, textX, textY, 20, DARKGRAY);
-} // End death
-
-void enterDeath() {
-    // Variables
-    const char* enterText = "Hit enter to quit";
-    int textWidth = MeasureText(enterText, 20);
-    int textX = (screenWidth - textWidth) / 2;
-    int textY = (textWidth / 2) + 80;
-    // Draw
-    DrawText(enterText, textX, textY, 20, DARKGRAY);
-} // End enterStart
+// LODGE SCREENS
 
 void displayLodgeBuyOptions() {
     ClearBackground(RAYWHITE);
@@ -144,11 +150,14 @@ void displayLodgeBuyOptionsTwo() {
     DrawText("Enter your choice: ", 100, 420, 20, DARKGRAY);
 } // End displayLodgeBuyOptions
 
+// EAT SCREENS
+
 void displayEatCookEat() {
     ClearBackground(RAYWHITE);
     // Display the options
     DrawText("1. - Cook caught food", 100, 100, 20, DARKGRAY);
     DrawText("2. - Eat purchased food", 100, 130, 20, DARKGRAY);
+    DrawText("3. Back", 100, 160, 20, DARKGRAY);
     // Prompt for user input
     DrawText("Enter your choice: ", 100, 420, 20, DARKGRAY);
 } // End displayEatCookEat
@@ -213,5 +222,69 @@ int getInventoryChoiceCook() {
     }
     return -1;
 } // End getInventoryChoice
+
+void displayWhatEaten(int index) {
+
+    std::string eatText = "You have eaten a " + animalInventory[index]->getType() + " for " 
+        + std::to_string(animalInventory[index]->getWeight()) + " food points";
+    int textWidth = MeasureText(eatText.c_str(), 20);
+    int textX = (screenWidth - textWidth) / 2;
+    int textY = (textX / 2);
+
+    const char* enterText = "Hit enter to escape";
+    int textWidthEnter = MeasureText(enterText, 20);
+    int textXEnter = (screenWidth - textWidthEnter) / 2;
+    int textYEnter = (textWidth / 2) + 80;
+
+    DrawText(eatText.c_str(), textX, textY, 20, DARKGRAY);
+    DrawText(enterText, textXEnter, textYEnter, 20, DARKGRAY);
+} // End displayWhatEaten
+
+// INVENTORY
+
+void displayInventory() {
+    int page = 0;
+    const int itemsPerPage = 5;
+    int totalPages = (animalInventory.size() + itemsPerPage - 1) / itemsPerPage;
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        int y = 100;
+        int startIndex = page * itemsPerPage;
+        int endIndex = std::min(startIndex + itemsPerPage, (int)animalInventory.size());
+        
+        for (int i = startIndex; i < endIndex; ++i) {
+            std::string itemText = std::to_string(i - startIndex + 1) + ". ";
+
+            // Fish check
+            Fish* fish = dynamic_cast<Fish*>(animalInventory[i]);
+            if (fish) {
+                itemText += fish->getType() + " ("
+                    + std::to_string(fish->getWeight()) + " lbs, "
+                    + std::to_string(fish->getLength()) + " in)";
+            }
+            // Animal check
+            else {
+                ForestAnimals* animal = dynamic_cast<ForestAnimals*>(animalInventory[i]);
+                if (animal) {
+                    itemText += animal->getType() + " ("
+                        + std::to_string(animal->getWeight()) + " lbs, "
+                        + std::to_string(animal->getHeight()) + " in tall)";
+                } else {
+                    itemText += animalInventory[i]->getType() + " ("
+                        + std::to_string(animalInventory[i]->getWeight()) + " lbs)";
+                }
+            }
+            DrawText(itemText.c_str(), 100, y, 20, DARKGRAY);
+            y += 30;
+        }
+
+        std::string pageText = "Use LEFT/RIGHT to change page. 9 to cancel.";
+        DrawText(pageText.c_str(), 100, y + 20, 20, DARKGRAY);
+
+        EndDrawing();
+    }    
+} // End displayInventory
 
 // End screens.cpp

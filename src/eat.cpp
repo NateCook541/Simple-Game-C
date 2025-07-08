@@ -9,7 +9,9 @@ bool cookMiniGame(CampingItems& lighter) {
     float currentProgress = 0.0f;
     float progressGoal = 100.0f;
     float timer = 10.0f;
-    while (!WindowShouldClose()) {
+    bool gameResult = false;
+    bool gameEnded = false;
+    while (!WindowShouldClose() && !gameEnded) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         DrawText("Press SPACE to start the fire!", 100, 200, 20, DARKGRAY);
@@ -20,22 +22,30 @@ bool cookMiniGame(CampingItems& lighter) {
         timer -= GetFrameTime();
         DrawRectangle(100, 250, (int)currentProgress, 20, GREEN);
         DrawRectangleLines(100, 250, (int)progressGoal, 20, BLACK);
+
         std::string timerText = "Time left: " + std::to_string((int)timer) + "s";
         DrawText(timerText.c_str(), 100, 300, 20, DARKGRAY);
         
         if (currentProgress >= progressGoal) {
             DrawText("You have started the fire!", 100, 350, 20, GREEN);
-            EndDrawing();
-            return true;
+            gameResult = true;
+            gameEnded = true;
         }
         else if (timer <= 0) {
             DrawText("The fire did not start. Try again!", 100, 350, 20, GREEN);
-            EndDrawing();
-            return false;
+            gameResult = false;
+            gameEnded = true;
         }
         EndDrawing();
+
+        if (gameEnded) {
+            float waitTime = 0.0f;
+            while (waitTime < 2.0f && !IsKeyPressed(KEY_ENTER)) {
+                waitTime += GetFrameTime();
+            }
+        }
     }
-    return false;
+    return gameResult;
 }
 
 void eatCook() {
@@ -47,9 +57,19 @@ void eatCook() {
 
         if (index >= 0 && index < animalInventory.size()) {
             animalInventory[index]->convertFood(*animalInventory[index]);
+
+            while(!WindowShouldClose()) {
+                BeginDrawing();
+                ClearBackground(RAYWHITE);
+                displayWhatEaten(index);
+                EndDrawing();
+                if (IsKeyPressed(KEY_ENTER)) {
+                    break;
+                }
+            }
+
             delete animalInventory[index];
             animalInventory.erase(animalInventory.begin() + index);
-            break;
         }
     }
 }
@@ -77,6 +97,8 @@ void selectEatType(CampingItems& lighter) {
         }
 
         displayEatCookEat();
+        EndDrawing();
+
         int choice = getUserChoice();
         if (choice != 0) {
             // Cook food caught
@@ -89,13 +111,17 @@ void selectEatType(CampingItems& lighter) {
                     if (fireDone) {
                         eatCook();
                     }
-                choice = 0;
                 }
+                choice = 0;
             }
-        }
-        // Eat purchased food
-        else if (choice == 2) {
-            //FIXME Add purchasable items from store to allow the user to eat here
+            // Eat purchased food
+            else if (choice == 2) {
+                //FIXME Add purchasable items from store to allow the user to eat here
+            }
+            else if (choice == 3) {
+                break;
+            }
         }
     }
 }
+

@@ -28,8 +28,8 @@ void lodgeBuy(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, Camp
         }
         if (buyChoice != 0) {
             if (page == 1) {
-                if (buyChoice == 1) { purchaseScreen(tent, "tent"); InputManager::resetInput(); }
-                else if (buyChoice == 2) { purchaseScreen(cot, "cot"); InputManager::resetInput(); }
+                if (buyChoice == 1) { purchaseScreen(tent, "tent"); InputManager::resetInput(); itemsInventory.push_back(tent); }
+                else if (buyChoice == 2) { purchaseScreen(cot, "cot"); InputManager::resetInput(); itemsInventory.push_back(cot); }
                 else if (buyChoice == 3) { purchaseScreen(shitRod, "Shit Rod"); InputManager::resetInput(); }
                 else if (buyChoice == 4) { purchaseScreen(goodRod, "Good Rod"); InputManager::resetInput(); }
                 else if (buyChoice == 5) { purchaseScreen(map, "map"); InputManager::resetInput(); }

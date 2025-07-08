@@ -7,6 +7,7 @@ const int screenHeight = 500;
 
 // Forward declaration
 class Animal;
+class CampingItems;
 
 // Player variables
 extern int playerHealth;
@@ -15,6 +16,7 @@ extern int playerThirst;
 extern int playerMoney;
 extern int daysPassed;
 extern std::vector<Animal*> animalInventory;
+extern std::vector<CampingItems> itemsInventory;
 
 // Functions
 void configureWindow();

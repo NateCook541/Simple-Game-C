@@ -3,6 +3,7 @@
 #include "screens.h"
 #include "gameplay.h"
 #include "animals.h"
+#include "campingItems.h"
 #include <iostream>
 #include <vector>
 
@@ -13,6 +14,7 @@ int playerThirst = 100;
 int playerMoney = 100;
 int daysPassed = 0;
 std::vector<Animal*> animalInventory;
+std::vector<CampingItems> itemsInventory;
 
 // Functions
 

@@ -11,15 +11,15 @@ void displayTravelOptions();
 void displayLodgeBuyOptions();
 void displayLodgeBuyOptionsTwo();
 void displayEatCookEat();
+void displayWhatEaten(int index);
 int getInventoryChoiceCook();
 int getUserChoice();
 
 // Display stats and inventory
 void displayStats();
+void displayInventory();
 
-// Ending screen
+// Ending screens
 void death();
 void enterDeath();
-
-// Stats screen
 
