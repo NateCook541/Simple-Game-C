@@ -47,5 +47,9 @@
         "optional": "cpp",
         "random": "cpp",
         "vector": "cpp"
-    }
+    },
+    "cSpell.words": [
+        "DARKGRAY",
+        "RAYWHITE"
+    ]
 }

@@ -6,7 +6,7 @@
 #include "fishing.h"
 #include "hunting.h"
 
-void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, CampingItems& goodRod, CampingItems& map, CampingItems& shitRifle, CampingItems& goodRifle, CampingItems& lighter)
+void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, CampingItems& goodRod, CampingItems& map, CampingItems& shitRifle, CampingItems& goodRifle, CampingItems& lighter, CampingItems& smallBackPack, CampingItems& largeBackPack)
 {
     int userChoice;
     while (!WindowShouldClose()) {
@@ -18,13 +18,13 @@ void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, Campin
             // Lodge buy
             if (userChoice == 1) {
                 InputManager::resetInput();
-                lodgeBuy(tent, cot, shitRod, goodRod, map, shitRifle, goodRifle, lighter);
+                lodgeBuy(tent, cot, shitRod, goodRod, map, shitRifle, goodRifle, lighter, smallBackPack, largeBackPack);
                 userChoice = 0;
             }
             // Fishing north
             else if (userChoice == 3) {
                 InputManager::resetInput();
-                fishing(shitRod, goodRod, true);
+                fishing(shitRod, goodRod, true, smallBackPack, largeBackPack);
                 userChoice = 0;
             }
             // Fishing south
@@ -49,7 +49,7 @@ void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, Campin
                 }
                 else {
                     InputManager::resetInput();
-                    fishing(shitRod, goodRod, false);
+                    fishing(shitRod, goodRod, false, smallBackPack, largeBackPack);
                     userChoice = 0;
                 }
             }

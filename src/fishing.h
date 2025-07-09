@@ -3,4 +3,4 @@
 #include "fish.h"
 
 Fish fishingMiniGame(CampingItems& shitRod, CampingItems& goodRod, bool northSouthFishing);
-void fishing(CampingItems& shitRod, CampingItems& goodRod, bool northSouth);
+void fishing(CampingItems& shitRod, CampingItems& goodRod, bool northSouth, CampingItems& smallBackPack, CampingItems& largeBackPack);

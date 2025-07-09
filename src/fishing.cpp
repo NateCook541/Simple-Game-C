@@ -3,6 +3,7 @@
 #include "campingItems.h"
 #include "config.h"
 #include "raylib.h"
+#include "screens.h"
 #include <string>
 #include <vector>
 #include <random>
@@ -39,7 +40,13 @@ Fish fishingMiniGame(CampingItems& shitRod, CampingItems& goodRod, bool northSou
     }
 }
 
-void fishing(CampingItems& shitRod, CampingItems& goodRod, bool northSouth) {
+void fishing(CampingItems& shitRod, CampingItems& goodRod, bool northSouth, CampingItems& smallBackPack, CampingItems& largeBackPack) {
+    // Limit check
+    bool fishingLimit = returnInventoryLimit(smallBackPack, largeBackPack);
+    if (fishingLimit == true) {
+        displayFullInventory(smallBackPack, largeBackPack);
+        return;
+    }
     // User has a good rod
     if (goodRod.getOwned()) {
         Fish caught = fishingMiniGame(shitRod, goodRod, northSouth);

@@ -5,6 +5,7 @@
 #include "fish.h"
 #include "forestAnimals.h"
 #include "animals.h"
+#include "campingItems.h"
 #include <string>
 
 // BASIC SCREENS
@@ -245,46 +246,98 @@ void displayWhatEaten(int index) {
 void displayInventory() {
     int page = 0;
     const int itemsPerPage = 5;
-    int totalPages = (animalInventory.size() + itemsPerPage - 1) / itemsPerPage;
+    int totalItems = animalInventory.size() + itemsInventory.size();
+    int totalPages = (totalItems + itemsPerPage - 1) / itemsPerPage;
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
         int y = 100;
         int startIndex = page * itemsPerPage;
-        int endIndex = std::min(startIndex + itemsPerPage, (int)animalInventory.size());
-        
+        int endIndex = std::min(startIndex + itemsPerPage, totalItems);
+
         for (int i = startIndex; i < endIndex; ++i) {
             std::string itemText = std::to_string(i - startIndex + 1) + ". ";
-
-            // Fish check
-            Fish* fish = dynamic_cast<Fish*>(animalInventory[i]);
-            if (fish) {
-                itemText += fish->getType() + " ("
-                    + std::to_string(fish->getWeight()) + " lbs, "
-                    + std::to_string(fish->getLength()) + " in)";
-            }
-            // Animal check
+            if (i < animalInventory.size()) {
+                // Animal section
+                Fish* fish = dynamic_cast<Fish*>(animalInventory[i]);
+                if (fish) {
+                    itemText += fish->getType() + " (" +
+                        std::to_string(fish->getWeight()) + " lbs, " +
+                        std::to_string(fish->getLength()) + " in)";
+                } 
+                else {
+                    ForestAnimals* animal = dynamic_cast<ForestAnimals*>(animalInventory[i]);
+                    if (animal) {
+                        itemText += animal->getType() + " (" +
+                            std::to_string(animal->getWeight()) + " lbs, " +
+                            std::to_string(animal->getHeight()) + " in tall)";
+                    } 
+                    else {
+                        itemText += animalInventory[i]->getType() + " (" +
+                            std::to_string(animalInventory[i]->getWeight()) + " lbs)";
+                    }
+                }
+            } 
             else {
-                ForestAnimals* animal = dynamic_cast<ForestAnimals*>(animalInventory[i]);
-                if (animal) {
-                    itemText += animal->getType() + " ("
-                        + std::to_string(animal->getWeight()) + " lbs, "
-                        + std::to_string(animal->getHeight()) + " in tall)";
-                } else {
-                    itemText += animalInventory[i]->getType() + " ("
-                        + std::to_string(animalInventory[i]->getWeight()) + " lbs)";
+                // Items section
+                int itemIdx = i - animalInventory.size();
+                CampingItems* campingItem = itemsInventory[itemIdx];
+                if (campingItem) {
+                    itemText += campingItem->getName() + " - $" + std::to_string(campingItem->getPrice());
                 }
             }
             DrawText(itemText.c_str(), 100, y, 20, DARKGRAY);
             y += 30;
         }
 
-        std::string pageText = "Use LEFT/RIGHT to change page. 9 to cancel.";
+        std::string pageText = "Use LEFT/RIGHT to change page. Press ENTER or 9 to go back.";
         DrawText(pageText.c_str(), 100, y + 20, 20, DARKGRAY);
 
         EndDrawing();
-    }    
+
+        if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_NINE)) {
+            break;
+        }
+        if (IsKeyPressed(KEY_RIGHT) && page < totalPages - 1) {
+            page++;
+        } 
+        else if (IsKeyPressed(KEY_LEFT) && page > 0) {
+            page--;
+        }
+    }
 } // End displayInventory
+
+void displayFullInventory(CampingItems& smallBackPack, CampingItems& largeBackPack) {
+    while(!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        std::string fullText = "your inventory is full ";
+
+        if (largeBackPack.getOwned()) {
+            fullText += "you can carry 15 animals with your large backpack.";
+        }
+        else if (smallBackPack.getOwned()) {
+            fullText += "you can carry 10 animals with your small backpack.";
+        }
+        else {
+            fullText += "you can only carry 5 animals without a backpack";
+        }
+
+        int textWidth = MeasureText(fullText.c_str(), 20);
+        int textX = (screenWidth - textWidth) / 2;
+        int textY = (textX / 2);
+
+        DrawText(fullText.c_str(), textX, textY, 20, DARKGRAY);
+        DrawText("Press enter to go back...", textX, 350, 20, DARKGRAY);
+
+        if (IsKeyPressed(KEY_ENTER)) {
+            break;
+        }
+        EndDrawing();
+    }
+} // End displayFullInventory
 
 // End screens.cpp

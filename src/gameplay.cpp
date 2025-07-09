@@ -38,7 +38,7 @@ void mainGameLoop() {
     // MAIN GAME LOOP
 
     // WHAT TO ADD
-    // BACKPACK SYSTEM
+    // MAIN MENU ART
     // PURCHASABLE FOOD
     // WATER / THIRST SYSTEM
     // TRAVEL REWORK
@@ -59,7 +59,7 @@ void mainGameLoop() {
             // Travel
             else if (userChoice == 2) {
                 InputManager::resetInput();
-                travel(tent, cot, shitRod, goodRod, map, shitRifle, goodRifle, lighter);
+                travel(tent, cot, shitRod, goodRod, map, shitRifle, goodRifle, lighter, smallBackPack, largeBackPack);
             }
             // Eat
             else if (userChoice == 3) {
@@ -74,7 +74,7 @@ void mainGameLoop() {
             // Display inventory
             else if (userChoice == 5)  {
                 InputManager::resetInput();
-                displayInventory(); // FIXME ADD DISPLAYING ITEMS
+                displayInventory();
             }
             // Quit
             else if (userChoice == 7) {

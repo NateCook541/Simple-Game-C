@@ -6,7 +6,7 @@
 #include "lodge.h"
 #include <string>
 
-void lodgeBuy(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, CampingItems& goodRod, CampingItems& map, CampingItems& shitRifle, CampingItems& goodRifle, CampingItems& lighter) {
+void lodgeBuy(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, CampingItems& goodRod, CampingItems& map, CampingItems& shitRifle, CampingItems& goodRifle, CampingItems& lighter, CampingItems& smallBackPack, CampingItems& largeBackPack) {
     int buyChoice = 0;
     int skipFrames = 5;
     int page = 1;
@@ -28,17 +28,18 @@ void lodgeBuy(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, Camp
         }
         if (buyChoice != 0) {
             if (page == 1) {
-                if (buyChoice == 1) { purchaseScreen(tent, "tent"); InputManager::resetInput(); itemsInventory.push_back(tent); }
-                else if (buyChoice == 2) { purchaseScreen(cot, "cot"); InputManager::resetInput(); itemsInventory.push_back(cot); }
-                else if (buyChoice == 3) { purchaseScreen(shitRod, "Shit Rod"); InputManager::resetInput(); }
-                else if (buyChoice == 4) { purchaseScreen(goodRod, "Good Rod"); InputManager::resetInput(); }
-                else if (buyChoice == 5) { purchaseScreen(map, "map"); InputManager::resetInput(); }
-                else if (buyChoice == 6) { purchaseScreen(shitRifle, "Shit Rifle"); InputManager::resetInput(); }
-                else if (buyChoice == 7) { purchaseScreen(goodRifle, "Good Rifle"); InputManager::resetInput(); }
-                else if (buyChoice == 8) { purchaseScreen(lighter, "Lighter"); InputManager::resetInput(); }
+                if (buyChoice == 1) { purchaseScreen(tent, "Tent"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(tent)); }
+                else if (buyChoice == 2) { purchaseScreen(cot, "Cot"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(cot)); }
+                else if (buyChoice == 3) { purchaseScreen(shitRod, "Shit Rod"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(shitRod)); }
+                else if (buyChoice == 4) { purchaseScreen(goodRod, "Good Rod"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(goodRod)); }
+                else if (buyChoice == 5) { purchaseScreen(map, "Map"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(map)); }
+                else if (buyChoice == 6) { purchaseScreen(shitRifle, "Shit Rifle"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(shitRifle)); }
+                else if (buyChoice == 7) { purchaseScreen(goodRifle, "Good Rifle"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(goodRifle)); }
+                else if (buyChoice == 8) { purchaseScreen(lighter, "Lighter"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(lighter)); }
                 else if (buyChoice == 9) { InputManager::resetInput(); break; }
             } else if (page == 2) {
-                if (buyChoice == 1) { purchaseScreen(lighter, "Lighter"); InputManager::resetInput(); }
+                if (buyChoice == 1) { purchaseScreen(smallBackPack, "Large backpack"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(smallBackPack)); }
+                else if (buyChoice == 2) { purchaseScreen(largeBackPack, "Small backpack"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(largeBackPack)); }
                 else if (buyChoice == 9) { 
                     InputManager::resetInput(); 
                     page = 1;

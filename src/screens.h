@@ -1,4 +1,5 @@
 #pragma once
+#include "campingItems.h"
 
 // Welcome screens
 void welcomeScreen();
@@ -18,8 +19,8 @@ int getUserChoice();
 // Display stats and inventory
 void displayStats();
 void displayInventory();
+void displayFullInventory(CampingItems& smallBackPack, CampingItems& largeBackPack);
 
 // Ending screens
 void death();
 void enterDeath();
-

@@ -14,7 +14,7 @@ int playerThirst = 100;
 int playerMoney = 100;
 int daysPassed = 0;
 std::vector<Animal*> animalInventory;
-std::vector<CampingItems> itemsInventory;
+std::vector<CampingItems*> itemsInventory;
 
 // Functions
 
@@ -43,5 +43,23 @@ void startGame() {
     CloseWindow();
 
 } // End startGame
+
+int getInventoryLimit(CampingItems& smallBackPack, CampingItems& largeBackPack) {
+    if (largeBackPack.getOwned()) {
+        return 15;
+    }
+    else if (smallBackPack.getOwned()) {
+        return 10;
+    }
+    else {
+        return 5;
+    }
+} // End getInventoryLimit
+
+bool returnInventoryLimit(CampingItems& smallBackPack, CampingItems& largeBackPack) {
+    int current = animalInventory.size();
+    int maxCapacity = getInventoryLimit(smallBackPack, largeBackPack);
+    return current >= maxCapacity;
+} // End returnInventoryLimit
 
 // End config.cpp
