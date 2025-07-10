@@ -3,6 +3,7 @@
 #include "forestAnimals.h"
 #include "config.h"
 #include "raylib.h"
+#include "screens.h"
 #include <string>
 #include <vector>
 #include <random>
@@ -39,7 +40,14 @@ ForestAnimals huntingMiniGame(CampingItems& shitRifle, CampingItems& goodRifle, 
     }
 }
 
-void hunting(CampingItems& shitRifle, CampingItems& goodRifle, bool deepCloseWoods) {
+void hunting(CampingItems& shitRifle, CampingItems& goodRifle, bool deepCloseWoods, CampingItems& smallBackPack, CampingItems& largeBackPack) {
+    // Limit check
+    bool animalLimit = returnInventoryLimit(smallBackPack, largeBackPack);
+    if (animalLimit) {
+        displayFullInventory(smallBackPack, largeBackPack);
+        return;
+    }
+    
     // User has a good rifle
     if (goodRifle.getOwned()) {
         ForestAnimals caught = huntingMiniGame(shitRifle, goodRifle, deepCloseWoods);

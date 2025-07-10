@@ -74,7 +74,6 @@ void eatCook() {
     }
 }
 
-// FIXME (Again add food (Will bloat the parameters))
 void selectEatType(CampingItems& lighter) {
     bool ifLighter = false;
     while (!WindowShouldClose()) {

@@ -35,9 +35,9 @@ void displayMainOptions() {
     DrawText("1. Sleep", 100, 100, 20, DARKGRAY);
     DrawText("2. Travel", 100, 130, 20, DARKGRAY);
     DrawText("3. Eat", 100, 160, 20, DARKGRAY);
-    DrawText("4. Display stats", 100, 190, 20, DARKGRAY);
-    DrawText("5. Display inventory", 100, 220, 20, DARKGRAY);
-    DrawText("6. Display map", 100, 250, 20, DARKGRAY);
+    DrawText("4. Drink", 100, 190, 20, DARKGRAY);
+    DrawText("5. Display stats", 100, 220, 20, DARKGRAY);
+    DrawText("6. Display inventory", 100, 250, 20, DARKGRAY);
     DrawText("7. Quit", 100, 280, 20, DARKGRAY);
     DrawText("Enter your choice: ", 100, 320, 20, DARKGRAY);
 } // End displayMainOptions
@@ -53,6 +53,30 @@ void displayTravelOptions() {
     DrawText("7. Back", 100, 280, 20, DARKGRAY);
     DrawText("Enter your choice: ", 100, 320, 20, DARKGRAY);
 } // End displayTravelOptions
+
+void displayMainMenuArt() {
+
+    const char* lakeArtMenuScreen = 
+    R"(
+                                        .---.
+                      .----------------'     '-----------------.
+                  .--'                                          '---.
+               .-'                                                   '-.
+             .'                                                        '.
+            /                                                            \
+            |                                                             |
+            |                                                             |
+             \                                                           /
+              '.                                                       .'
+                '-._                                               _.-'
+                    '---------------------------------------------'
+    )";
+
+    int textWidth = MeasureText(lakeArtMenuScreen, 16);
+    int textX = screenWidth - textWidth - 20;
+
+    DrawText(lakeArtMenuScreen, textX, 50, 16, DARKGRAY);
+} // End displayMainMenuArt
 
 int getUserChoice() {
     // Check ready to accept input
@@ -78,12 +102,12 @@ int getUserChoice() {
     return 0;
 } // End getUserChoice
 
-void death() {
-    const char* deathText = "You have died. Game over!";
-    int textWidth = MeasureText(deathText, 20);
+void death(std::string deathCauseText) {
+    std::string deathText = deathCauseText;
+    int textWidth = MeasureText(deathText.c_str(), 20);
     int textX = (screenWidth - textWidth) / 2;
     int textY = (textX / 2);
-    DrawText(deathText, textX, textY, 20, DARKGRAY);
+    DrawText(deathText.c_str(), textX, textY, 20, DARKGRAY);
 } // End death
 
 void enterDeath() {

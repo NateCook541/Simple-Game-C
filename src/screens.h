@@ -1,5 +1,6 @@
 #pragma once
 #include "campingItems.h"
+#include <string>
 
 // Welcome screens
 void welcomeScreen();
@@ -22,5 +23,5 @@ void displayInventory();
 void displayFullInventory(CampingItems& smallBackPack, CampingItems& largeBackPack);
 
 // Ending screens
-void death();
+void death(std::string deathCauseText);
 void enterDeath();

@@ -43,7 +43,7 @@ Fish fishingMiniGame(CampingItems& shitRod, CampingItems& goodRod, bool northSou
 void fishing(CampingItems& shitRod, CampingItems& goodRod, bool northSouth, CampingItems& smallBackPack, CampingItems& largeBackPack) {
     // Limit check
     bool fishingLimit = returnInventoryLimit(smallBackPack, largeBackPack);
-    if (fishingLimit == true) {
+    if (fishingLimit) {
         displayFullInventory(smallBackPack, largeBackPack);
         return;
     }

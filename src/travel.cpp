@@ -8,17 +8,30 @@
 
 void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, CampingItems& goodRod, CampingItems& map, CampingItems& shitRifle, CampingItems& goodRifle, CampingItems& lighter, CampingItems& smallBackPack, CampingItems& largeBackPack)
 {
-    int userChoice;
+    int skipFrames = 5;
+    int userChoice = 0;
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         displayTravelOptions();
-        userChoice = getUserChoice();
+
+        if (skipFrames > 0) {
+            skipFrames--; 
+        } 
+        else if (userChoice == 0) {
+            userChoice = getUserChoice();
+        }
+
         if (userChoice != 0) {
             // Lodge buy
             if (userChoice == 1) {
                 InputManager::resetInput();
                 lodgeBuy(tent, cot, shitRod, goodRod, map, shitRifle, goodRifle, lighter, smallBackPack, largeBackPack);
+                userChoice = 0;
+            }
+            else if (userChoice == 2) {
+                InputManager::resetInput();
+                lodgeSell();
                 userChoice = 0;
             }
             // Fishing north
@@ -46,6 +59,8 @@ void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, Campin
                         }
                         EndDrawing();
                     }
+                    userChoice = 0;
+                    skipFrames = 5;
                 }
                 else {
                     InputManager::resetInput();
@@ -72,17 +87,19 @@ void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, Campin
                         }
                         EndDrawing();
                     }
+                    userChoice = 0;
+                    skipFrames = 5;
                 }
                 else {
                     InputManager::resetInput();
-                    hunting(shitRifle, goodRifle, true);
+                    hunting(shitRifle, goodRifle, true, smallBackPack, largeBackPack);
                     userChoice = 0;
                 }
             }
             // Close woods
             else if (userChoice == 6) {
                 InputManager::resetInput();
-                hunting(shitRifle, goodRifle, false);
+                hunting(shitRifle, goodRifle, false, smallBackPack, largeBackPack);
                 userChoice = 0;
             }
             // Back

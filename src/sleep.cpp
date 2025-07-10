@@ -20,6 +20,8 @@ void sleep(const CampingItems& tent, const CampingItems& cot) {
             }
             EndDrawing();
         }
+        playerHunger -= 25;
+        playerThirst -= 25;
         daysPassed++;
     }
     // Cot
@@ -39,6 +41,8 @@ void sleep(const CampingItems& tent, const CampingItems& cot) {
                 }
                 EndDrawing();
             }
+            playerHunger -= 25;
+            playerThirst -= 25;
             daysPassed++;
             playerHealth--;
         }
@@ -56,6 +60,8 @@ void sleep(const CampingItems& tent, const CampingItems& cot) {
                 }
                 EndDrawing();
             }
+            playerHunger -= 25;
+            playerThirst -= 25;
             daysPassed++;
         }
     }
@@ -76,6 +82,8 @@ void sleep(const CampingItems& tent, const CampingItems& cot) {
                 }
                 EndDrawing();
             }
+            playerHunger -= 25;
+            playerThirst -= 25;
             daysPassed++;
             playerHealth--;
         }
@@ -93,6 +101,8 @@ void sleep(const CampingItems& tent, const CampingItems& cot) {
                 }
                 EndDrawing();
             }
+            playerHunger -= 25;
+            playerThirst -= 25;
             daysPassed++;
         }
     }
@@ -116,7 +126,6 @@ bool healthLose(int thirst, int hunger, const CampingItems& tent, const CampingI
     if (risk > 1.0) {
         risk = 1.0;
     }
-
     
     float random = static_cast<float>(std::rand()) / RAND_MAX;
 

@@ -7,6 +7,7 @@
 #include "config.h"
 #include "travel.h"
 #include "eat.h"
+#include "drink.h"
 #include <string>
 
 void mainGameLoop() {
@@ -31,24 +32,20 @@ void mainGameLoop() {
     // Allows the player to light fires to cook food from animals
     CampingItems lighter("Lighter", 10, false);
 
-    // Maybe a backpack system to cap how many animals a player can catch / hunt before they have to return to lodge / camp
+    // Backpack system to cap how many animals a player can catch / hunt before they have to return to lodge / camp
     CampingItems smallBackPack("Small Backpack", 15, false);
     CampingItems largeBackPack("Large Backpack", 25, false);
 
     // MAIN GAME LOOP
 
-    // WHAT TO ADD
-    // MAIN MENU ART
-    // PURCHASABLE FOOD
-    // WATER / THIRST SYSTEM
-    // TRAVEL REWORK
-    // ADD STATS DECREASING PER DAY AND DEATH CHECKS FOR THEM AS WELL
-    // MORE ETC
+    // THIRST SYSTEM (Water tabs for 100%, Water bottle for 50 at a  time)
+    // PURCHASABLE FOOD (Might be in a new class along with water tabs)
 
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         displayMainOptions();
+        displayMainMenuArt();
         int userChoice = getUserChoice();
         if (userChoice != 0) {
             // Sleep
@@ -66,13 +63,18 @@ void mainGameLoop() {
                 InputManager::resetInput();
                 selectEatType(lighter);
             }
-            // Display stats
+            // Drink
             else if (userChoice == 4) {
+                InputManager::resetInput();
+                // drink();
+            }
+            // Display stats
+            else if (userChoice == 5)  {
                 InputManager::resetInput();
                 displayStats();
             }
-            // Display inventory
-            else if (userChoice == 5)  {
+             // Display inventory
+            else if (userChoice == 6) {
                 InputManager::resetInput();
                 displayInventory();
             }
@@ -81,13 +83,17 @@ void mainGameLoop() {
                 break;
             }
         }
-        // If player dies
-        if (playerHealth == 0 || playerHunger == 0 || playerThirst == 0) {
+
+        // DEATH CHECKS
+
+        // If player dies from health
+        if (playerHealth == 0) {
             InputManager::resetInput();
+            std::string deathText = "You lost all your health. Game over!";
             while (!WindowShouldClose()) {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
-                death();
+                death(deathText);
                 enterDeath();
                 EndDrawing();
                 if (IsKeyPressed(KEY_ENTER)) {
@@ -96,9 +102,73 @@ void mainGameLoop() {
             }
             break;
         }
+        // If player dies from lack of hunger
+        else if (playerHunger == 0) {
+            InputManager::resetInput();
+            std::string deathText = "You died of hunger. Game over!";
+            while (!WindowShouldClose()) {
+                BeginDrawing();
+                ClearBackground(RAYWHITE);
+                death(deathText);
+                enterDeath();
+                EndDrawing();
+                if (IsKeyPressed(KEY_ENTER)) {
+                    break;
+                }
+            }
+            break;
+        }
+        // If player dies from lack thirst
+        else if (playerThirst == 0) {
+            InputManager::resetInput();
+            std::string deathText = "You died of thirst. Game over!";
+            while (!WindowShouldClose()) {
+                BeginDrawing();
+                ClearBackground(RAYWHITE);
+                death(deathText);
+                enterDeath();
+                EndDrawing();
+                if (IsKeyPressed(KEY_ENTER)) {
+                    break;
+                }
+            }
+            break;
+        }
+        // If player dies from too much food
+        else if (playerThirst == 125) {
+            InputManager::resetInput();
+            std::string deathText = "You died because you eat too much food. Game over!";
+            while (!WindowShouldClose()) {
+                BeginDrawing();
+                ClearBackground(RAYWHITE);
+                death(deathText);
+                enterDeath();
+                EndDrawing();
+                if (IsKeyPressed(KEY_ENTER)) {
+                    break;
+                }
+            }
+            break;
+        }
+        // If player dies from too much water
+        else if (playerThirst == 125) {
+            InputManager::resetInput();
+            std::string deathText = "You died because you drank too much water. Game over!";
+            while (!WindowShouldClose()) {
+                BeginDrawing();
+                ClearBackground(RAYWHITE);
+                death(deathText);
+                enterDeath();
+                EndDrawing();
+                if (IsKeyPressed(KEY_ENTER)) {
+                    break;
+                }
+            }
+            break;
+        }
+
         EndDrawing();
     }
-
 } // End mainGameLoop
 
 // End gameplay.cpp

@@ -4,6 +4,7 @@
 #include "inputManager.h"
 #include "config.h"
 #include "lodge.h"
+#include "animals.h"
 #include <string>
 
 void lodgeBuy(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, CampingItems& goodRod, CampingItems& map, CampingItems& shitRifle, CampingItems& goodRifle, CampingItems& lighter, CampingItems& smallBackPack, CampingItems& largeBackPack) {
@@ -110,4 +111,40 @@ void purchaseScreen(CampingItems& item, const std::string& itemName) {
             }
         }
     }
+}
+
+void lodgeSell() {
+    while (!WindowShouldClose()) {
+        int index = getInventoryChoiceCook();
+        
+        if (index == -1) {
+            break;
+        }
+
+        if (index >= 0 && index < animalInventory.size()) {
+            animalInventory[index]->convertMoney(*animalInventory[index]);
+        
+            while(!WindowShouldClose()) {
+                BeginDrawing();
+                ClearBackground(RAYWHITE);
+                sellScreen(index);
+                EndDrawing();
+                if (IsKeyPressed(KEY_ENTER)) {
+                    break;
+                }
+            }
+
+            delete animalInventory[index];
+            animalInventory.erase(animalInventory.begin() + index);
+        }
+    }
+}
+
+void sellScreen(int index) {
+    std::string ownText = "You have sold " + animalInventory[index]->getType() + " for "
+        + std::to_string(animalInventory[index]->getWeight()) + "$";
+    int textWidth = MeasureText(ownText.c_str(), 20);
+    int textX = (screenWidth - textWidth) / 2;
+    DrawText(ownText.c_str(), textX, 225, 20, RED);
+    DrawText("Press ENTER to go back...", textX, 275, 20, DARKGRAY);
 }

@@ -15,6 +15,10 @@ public:
     void convertFood(Animal animalConvert) {
         playerHunger += animalConvert.weight;
     }
+    // Converts money from fish/animal depending on weight
+    void convertMoney(Animal animalConvert) {
+        playerMoney += animalConvert.weight;
+    }
     // Adds to the inventory if a fish/animal is caught
     void addAnimalInventory(Animal* animalAdd) {
         animalInventory.push_back(animalAdd);
