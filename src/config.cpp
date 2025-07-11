@@ -15,6 +15,7 @@ int playerMoney = 100;
 int daysPassed = 0;
 std::vector<Animal*> animalInventory;
 std::vector<CampingItems*> itemsInventory;
+std::vector<Consumables*> consumablesInventory;
 
 // Functions
 

@@ -6,6 +6,7 @@
 #include "forestAnimals.h"
 #include "animals.h"
 #include "campingItems.h"
+#include "consumables.h"
 #include <string>
 
 // BASIC SCREENS
@@ -167,8 +168,14 @@ void displayLodgeBuyOptions() {
 void displayLodgeBuyOptionsTwo() {
     ClearBackground(RAYWHITE);
     // Display the options
-    DrawText("1. Small backpack - 15$", 100, 100, 20, DARKGRAY);
-    DrawText("2. Large backpack - 25$", 100, 130, 20, DARKGRAY);
+    DrawText("1. Large backpack - 25$", 100, 100, 20, DARKGRAY);
+    DrawText("2. Small backpack - 15$", 100, 130, 20, DARKGRAY);
+    DrawText("3. Water Bottle - 15$", 100, 160, 20, DARKGRAY);
+    DrawText("4. Jerky - 10$", 100, 190, 20, DARKGRAY);
+    DrawText("5. Candy Bar - 5$", 100, 220, 20, DARKGRAY);
+    DrawText("6. First Aid Kit - 15$", 100, 250, 20, DARKGRAY);
+    DrawText("7. Water Purification Tablets - 5$", 100, 280, 20, DARKGRAY);
+    DrawText("8. Bottled Water - 5$", 100, 310, 20, DARKGRAY);
     DrawText("9. Back", 100, 340, 20, DARKGRAY);
     DrawText("Hit RIGHT ALT to switch between screens", 100, 440, 20, DARKGRAY);
     // Prompt for user input
@@ -248,10 +255,95 @@ int getInventoryChoiceCook() {
     return -1;
 } // End getInventoryChoice
 
+int getInventoryChoiceConsumables() {
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        int y = 100;
+        int itemCount = 0;
+
+        for (int i = 0; i < consumablesInventory.size(); i++) {
+            if (consumablesInventory[i]->hasItem()) {
+                itemCount++;
+            }
+        }
+        
+        if (itemCount == 0) {
+            DrawText("No food items in your inventory", 100, y, 20, DARKGRAY);
+            DrawText("Press 9 to go back...", 100, 130, 20, DARKGRAY);
+            EndDrawing();
+
+            int choice = getUserChoice();
+            if (choice == 9) {
+                return -1;
+            }
+            continue;
+        }
+
+        int displayIndex = 1;
+
+        for (int i = 0; i < consumablesInventory.size(); i++) {
+            if (consumablesInventory[i]->hasItem()) {
+                std::string itemText = std::to_string(displayIndex) + ". ";
+                itemText += consumablesInventory[i]->getNameCon() + " - Qty: " +
+                    std::to_string(consumablesInventory[i]->getQty()) +
+                    " ($" + std::to_string(consumablesInventory[i]->getPriceCon()) + " each)";
+
+                DrawText(itemText.c_str(), 100, y, 20, DARKGRAY);
+                y += 30;
+                displayIndex++;
+            }        
+        }
+        
+        std::string pageText = "Select item to eat. 9 to cancel.";
+        DrawText(pageText.c_str(), 190, y + 20, 20, DARKGRAY);
+
+        EndDrawing();
+
+        int choice = getUserChoice();
+        if (choice >= 1 && choice <= itemCount) {
+            int realIndex = -1;
+            int currentDisplay = 1;
+            for (int i = 0; i < consumablesInventory.size(); i++) {
+                if (consumablesInventory[i]->hasItem()) {
+                    if (currentDisplay == choice) {
+                        realIndex = i;
+                        break;
+                    }
+                    currentDisplay++;
+                }
+            }
+            return realIndex;
+        }
+        else if (choice == 9) {
+            return -1;
+        }
+    }
+    return -1;
+} // End getInventoryChoiceConsumables
+
 void displayWhatEaten(int index) {
 
     std::string eatText = "You have eaten a " + animalInventory[index]->getType() + " for " 
         + std::to_string(animalInventory[index]->getWeight()) + " food points";
+    int textWidth = MeasureText(eatText.c_str(), 20);
+    int textX = (screenWidth - textWidth) / 2;
+    int textY = (textX / 2);
+
+    const char* enterText = "Hit enter to escape";
+    int textWidthEnter = MeasureText(enterText, 20);
+    int textXEnter = (screenWidth - textWidthEnter) / 2;
+    int textYEnter = (textWidth / 2) + 80;
+
+    DrawText(eatText.c_str(), textX, textY, 20, DARKGRAY);
+    DrawText(enterText, textXEnter, textYEnter, 20, DARKGRAY);
+} // End displayWhatEaten
+
+void displayWhatEatenConsumables(int index) {
+
+    std::string eatText = "You have eaten a " + consumablesInventory[index]->getNameCon() + " for " 
+        + std::to_string(consumablesInventory[index]->getHunger()) + " food points";
     int textWidth = MeasureText(eatText.c_str(), 20);
     int textX = (screenWidth - textWidth) / 2;
     int textY = (textX / 2);
@@ -270,7 +362,7 @@ void displayWhatEaten(int index) {
 void displayInventory() {
     int page = 0;
     const int itemsPerPage = 5;
-    int totalItems = animalInventory.size() + itemsInventory.size();
+    int totalItems = animalInventory.size() + itemsInventory.size() + consumablesInventory.size();
     int totalPages = (totalItems + itemsPerPage - 1) / itemsPerPage;
 
     while (!WindowShouldClose()) {
@@ -304,7 +396,7 @@ void displayInventory() {
                     }
                 }
             } 
-            else {
+            else if (i < animalInventory.size() + itemsInventory.size()) {
                 // Items section
                 int itemIdx = i - animalInventory.size();
                 CampingItems* campingItem = itemsInventory[itemIdx];
@@ -312,6 +404,19 @@ void displayInventory() {
                     itemText += campingItem->getName() + " - $" + std::to_string(campingItem->getPrice());
                 }
             }
+            // Consumables section
+            else {
+                int consumableIdx = i - animalInventory.size() - itemsInventory.size();
+                if (consumableIdx >= 0 && consumableIdx < consumablesInventory.size()) {
+                    Consumables* consumableItem = consumablesInventory[consumableIdx];
+                    if (consumableItem && consumableItem->hasItem()) {
+                        itemText += consumableItem->getNameCon() + " - Qty: " +
+                            std::to_string(consumableItem->getQty()) +
+                            " ($" + std::to_string(consumableItem->getPriceCon()) + " each)";
+                    }
+                }
+            }
+
             DrawText(itemText.c_str(), 100, y, 20, DARKGRAY);
             y += 30;
         }

@@ -8,6 +8,7 @@
 #include "travel.h"
 #include "eat.h"
 #include "drink.h"
+#include "consumables.h"
 #include <string>
 
 void mainGameLoop() {
@@ -36,16 +37,37 @@ void mainGameLoop() {
     CampingItems smallBackPack("Small Backpack", 15, false);
     CampingItems largeBackPack("Large Backpack", 25, false);
 
+    // Allows the player to collect 50 water from the lake at a single time
+    CampingItems waterBottle("Water Bottle", 15, false);
+
+    // CONSUMABLE ITEMS
+
+    // Food
+    Consumables candyBar("Candy Bar", 5, 0, 0, 10);
+    Consumables jerky("Jerky", 10, 0, 0, 25);
+
+    // Water
+    Consumables waterTab("Water Purification Tablets", 5, 0, 0, 0);
+    Consumables bottledWater("Bottled Water", 5, 0, 25, 0);
+
+    // Health
+    Consumables firstAidKit("First Aid Kit", 25, 0, 0, 0);
+
     // MAIN GAME LOOP
 
-    // THIRST SYSTEM (Water tabs for 100%, Water bottle for 50 at a  time)
-    // PURCHASABLE FOOD (Might be in a new class along with water tabs)
+
+    // TODO 
+    // Add water bottle functionality
+    // Implement first add kit usage (Maybe if die give option to use it?)
+    // Make it so only food items displays in the eat function
+    // BUG FIXES
 
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         displayMainOptions();
-        displayMainMenuArt();
+        // FIX IN GRAPHICS UPDATE
+        // displayMainMenuArt();
         int userChoice = getUserChoice();
         if (userChoice != 0) {
             // Sleep
@@ -56,7 +78,7 @@ void mainGameLoop() {
             // Travel
             else if (userChoice == 2) {
                 InputManager::resetInput();
-                travel(tent, cot, shitRod, goodRod, map, shitRifle, goodRifle, lighter, smallBackPack, largeBackPack);
+                travel(tent, cot, shitRod, goodRod, map, shitRifle, goodRifle, lighter, smallBackPack, largeBackPack, waterBottle, firstAidKit, waterTab, candyBar, jerky, bottledWater);
             }
             // Eat
             else if (userChoice == 3) {
@@ -135,9 +157,9 @@ void mainGameLoop() {
             break;
         }
         // If player dies from too much food
-        else if (playerThirst == 125) {
+        else if (playerHunger == 125) {
             InputManager::resetInput();
-            std::string deathText = "You died because you eat too much food. Game over!";
+            std::string deathText = "You died because you consumed too much food. Game over!";
             while (!WindowShouldClose()) {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
@@ -151,7 +173,7 @@ void mainGameLoop() {
             break;
         }
         // If player dies from too much water
-        else if (playerThirst == 125) {
+        else if (playerThirst == 150) {
             InputManager::resetInput();
             std::string deathText = "You died because you drank too much water. Game over!";
             while (!WindowShouldClose()) {

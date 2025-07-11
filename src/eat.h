@@ -5,3 +5,4 @@
 bool cookMiniGame(CampingItems& lighter);
 void eatCook();
 void selectEatType(CampingItems& lighter);
+void eatConsumableFood();

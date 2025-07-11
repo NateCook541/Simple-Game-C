@@ -46,7 +46,8 @@
         "algorithm": "cpp",
         "optional": "cpp",
         "random": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "*.m": "cpp"
     },
     "cSpell.words": [
         "DARKGRAY",

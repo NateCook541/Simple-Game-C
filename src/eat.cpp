@@ -4,6 +4,7 @@
 #include "screens.h"
 #include "raylib.h"
 #include "inputManager.h"
+#include "consumables.h"
 
 bool cookMiniGame(CampingItems& lighter) {
     float currentProgress = 0.0f;
@@ -115,12 +116,40 @@ void selectEatType(CampingItems& lighter) {
             }
             // Eat purchased food
             else if (choice == 2) {
-                //FIXME Add purchasable items from store to allow the user to eat here
+                InputManager::resetInput();
+                eatConsumableFood();
+                choice = 0;
             }
+            // Go back
             else if (choice == 3) {
                 break;
             }
         }
+    }
+}
+
+void eatConsumableFood() {
+    while (!WindowShouldClose()) {
+        int choice = getInventoryChoiceConsumables();
+        if (choice == -1) {
+            break;
+        }
+
+        if (choice >= 0 && choice < consumablesInventory.size()) {
+
+            consumablesInventory[choice]->consumeFood();
+
+            while(!WindowShouldClose()) {
+                BeginDrawing();
+                ClearBackground(RAYWHITE);
+                displayWhatEatenConsumables(choice);
+                EndDrawing();
+                if (IsKeyPressed(KEY_ENTER)) {
+                    break;
+                }
+            }
+        }
+        InputManager::resetInput();
     }
 }
 

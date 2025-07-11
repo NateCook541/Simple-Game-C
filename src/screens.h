@@ -16,6 +16,8 @@ void displayEatCookEat();
 void displayWhatEaten(int index);
 int getInventoryChoiceCook();
 int getUserChoice();
+int getInventoryChoiceConsumables();
+void displayWhatEatenConsumables(int index);
 
 // Display stats and inventory
 void displayStats();

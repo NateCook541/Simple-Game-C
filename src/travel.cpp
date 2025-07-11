@@ -6,7 +6,7 @@
 #include "fishing.h"
 #include "hunting.h"
 
-void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, CampingItems& goodRod, CampingItems& map, CampingItems& shitRifle, CampingItems& goodRifle, CampingItems& lighter, CampingItems& smallBackPack, CampingItems& largeBackPack)
+void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, CampingItems& goodRod, CampingItems& map, CampingItems& shitRifle, CampingItems& goodRifle, CampingItems& lighter, CampingItems& smallBackPack, CampingItems& largeBackPack, CampingItems& waterBottle, Consumables& firstAidKit, Consumables& waterPurificationTabs, Consumables& candyBar, Consumables& jerky, Consumables& bottledWater)
 {
     int skipFrames = 5;
     int userChoice = 0;
@@ -26,7 +26,7 @@ void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, Campin
             // Lodge buy
             if (userChoice == 1) {
                 InputManager::resetInput();
-                lodgeBuy(tent, cot, shitRod, goodRod, map, shitRifle, goodRifle, lighter, smallBackPack, largeBackPack);
+                lodgeBuy(tent, cot, shitRod, goodRod, map, shitRifle, goodRifle, lighter, smallBackPack, largeBackPack, waterBottle, firstAidKit, waterPurificationTabs, candyBar, jerky, bottledWater);
                 userChoice = 0;
             }
             else if (userChoice == 2) {
