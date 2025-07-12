@@ -18,6 +18,8 @@ int getInventoryChoiceCook();
 int getUserChoice();
 int getInventoryChoiceConsumables();
 void displayWhatEatenConsumables(int index);
+void displayDrinkWaterTabs();
+void drinkMessage(bool waterBottle, bool waterTabs, bool successful);
 
 // Display stats and inventory
 void displayStats();

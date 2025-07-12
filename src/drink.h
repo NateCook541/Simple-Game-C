@@ -1,6 +1,5 @@
 #pragma once
-
+#include "consumables.h"
 #include "campingItems.h"
 
-bool drinkLoseHealth(Consumables& fillTabs);
-void drink(CampingItems& waterBottle, CampingItems& fillTabs);
+void drink(CampingItems& waterBottle, Consumables& fillTabs);

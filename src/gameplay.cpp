@@ -55,19 +55,20 @@ void mainGameLoop() {
 
     // MAIN GAME LOOP
 
-
-    // TODO 
-    // Add water bottle functionality
-    // Implement first add kit usage (Maybe if die give option to use it?)
-    // Make it so only food items displays in the eat function
+    // V1.1
     // BUG FIXES
+    // First aid kit changes
+    // Allow for boiling water
+    // Add tips menu
 
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         displayMainOptions();
+
         // FIX IN GRAPHICS UPDATE
         // displayMainMenuArt();
+
         int userChoice = getUserChoice();
         if (userChoice != 0) {
             // Sleep
@@ -88,7 +89,7 @@ void mainGameLoop() {
             // Drink
             else if (userChoice == 4) {
                 InputManager::resetInput();
-                // drink();
+                drink(waterBottle, waterTab);
             }
             // Display stats
             else if (userChoice == 5)  {
@@ -110,19 +111,37 @@ void mainGameLoop() {
 
         // If player dies from health
         if (playerHealth == 0) {
-            InputManager::resetInput();
-            std::string deathText = "You lost all your health. Game over!";
-            while (!WindowShouldClose()) {
-                BeginDrawing();
-                ClearBackground(RAYWHITE);
-                death(deathText);
-                enterDeath();
-                EndDrawing();
-                if (IsKeyPressed(KEY_ENTER)) {
-                    break;
+            if (firstAidKit.hasItem()) {
+                playerHealth++;
+                firstAidKit.removeQty();
+                std::string firstAidSaveText = "You used your first aid kit have regained one health point!";
+                while (!WindowShouldClose()) {
+                    BeginDrawing();
+                    ClearBackground(RAYWHITE);
+                    death(firstAidSaveText);
+                    enterDeath();
+                    EndDrawing();
+                    if (IsKeyPressed(KEY_ENTER)) {
+                        break;
+                    }
                 }
+                InputManager::resetInput();
             }
-            break;
+            else {
+                InputManager::resetInput();
+                std::string deathText = "You lost all your health. Game over!";
+                while (!WindowShouldClose()) {
+                    BeginDrawing();
+                    ClearBackground(RAYWHITE);
+                    death(deathText);
+                    enterDeath();
+                    EndDrawing();
+                    if (IsKeyPressed(KEY_ENTER)) {
+                        break;
+                    }
+                }
+                break;
+            }
         }
         // If player dies from lack of hunger
         else if (playerHunger == 0) {
@@ -188,7 +207,6 @@ void mainGameLoop() {
             }
             break;
         }
-
         EndDrawing();
     }
 } // End mainGameLoop

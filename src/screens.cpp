@@ -284,7 +284,7 @@ int getInventoryChoiceConsumables() {
         int displayIndex = 1;
 
         for (int i = 0; i < consumablesInventory.size(); i++) {
-            if (consumablesInventory[i]->hasItem()) {
+            if (consumablesInventory[i]->hasItem() && consumablesInventory[i]->getHunger() > 0) {
                 std::string itemText = std::to_string(displayIndex) + ". ";
                 itemText += consumablesInventory[i]->getNameCon() + " - Qty: " +
                     std::to_string(consumablesInventory[i]->getQty()) +
@@ -306,7 +306,7 @@ int getInventoryChoiceConsumables() {
             int realIndex = -1;
             int currentDisplay = 1;
             for (int i = 0; i < consumablesInventory.size(); i++) {
-                if (consumablesInventory[i]->hasItem()) {
+                if (consumablesInventory[i]->hasItem() && consumablesInventory[i]->getHunger() > 0) {
                     if (currentDisplay == choice) {
                         realIndex = i;
                         break;
@@ -468,5 +468,106 @@ void displayFullInventory(CampingItems& smallBackPack, CampingItems& largeBackPa
         EndDrawing();
     }
 } // End displayFullInventory
+
+// THIRST
+
+void displayDrinkWaterTabs() {
+    ClearBackground(RAYWHITE);
+    // Display the options
+    DrawText("1. - Use a purification tablets ", 100, 100, 20, DARKGRAY);
+    DrawText("2. - Drink water from lake", 100, 130, 20, DARKGRAY);
+    DrawText("3. Back", 100, 160, 20, DARKGRAY);
+    // Prompt for user input
+    DrawText("Enter your choice: ", 100, 420, 20, DARKGRAY);
+} // End displayDrinkWaterTabs
+
+void drinkMessage(bool waterBottle, bool waterTabs, bool successful) {
+
+    std::string tabsBottleSuccessful = "You have drank and filled your water bottle.";
+    std::string tabsSuccessful = "You have drank some water.";
+    std::string bottleFail = "You have drank a lot of water but lost health";
+    std::string bottleSuccessful = "You have drank water and filled up your water bottle";
+    std::string failWater = "You have drank some water but lost health";
+    std::string successfulWater = "You have drank some water";
+    std::string fallBack = "Error!";
+
+    if (waterBottle == true && waterTabs == true && successful == true) {
+        int textWidth = MeasureText(tabsBottleSuccessful.c_str(), 20);
+        int textX = (screenWidth - textWidth) / 2;
+        int textY = (textX / 2);
+        const char* enterText = "Hit enter to escape";
+        int textWidthEnter = MeasureText(enterText, 20);
+        int textXEnter = (screenWidth - textWidthEnter) / 2;
+        int textYEnter = (textWidth / 2) + 80;
+        DrawText(enterText, textXEnter, textYEnter, 20, DARKGRAY);
+        DrawText(tabsBottleSuccessful.c_str(), textX, textY, 20, DARKGRAY);
+    }
+    else if (waterBottle == false && waterTabs == true && successful == true) {
+        int textWidth = MeasureText(tabsSuccessful.c_str(), 20);
+        int textX = (screenWidth - textWidth) / 2;
+        int textY = (textX / 2);
+        const char* enterText = "Hit enter to escape";
+        int textWidthEnter = MeasureText(enterText, 20);
+        int textXEnter = (screenWidth - textWidthEnter) / 2;
+        int textYEnter = (textWidth / 2) + 80;
+        DrawText(enterText, textXEnter, textYEnter, 20, DARKGRAY);
+        DrawText(tabsSuccessful.c_str(), textX, textY, 20, DARKGRAY);
+    }
+    else if (waterBottle == true && waterTabs == false && successful == false) {
+        int textWidth = MeasureText(bottleFail.c_str(), 20);
+        int textX = (screenWidth - textWidth) / 2;
+        int textY = (textX / 2);
+        const char* enterText = "Hit enter to escape";
+        int textWidthEnter = MeasureText(enterText, 20);
+        int textXEnter = (screenWidth - textWidthEnter) / 2;
+        int textYEnter = (textWidth / 2) + 80;
+        DrawText(enterText, textXEnter, textYEnter, 20, DARKGRAY);
+        DrawText(bottleFail.c_str(), textX, textY, 20, DARKGRAY);
+    }
+    else if (waterBottle == true && waterTabs == false && successful == true) {
+        int textWidth = MeasureText(bottleSuccessful.c_str(), 20);
+        int textX = (screenWidth - textWidth) / 2;
+        int textY = (textX / 2);
+        const char* enterText = "Hit enter to escape";
+        int textWidthEnter = MeasureText(enterText, 20);
+        int textXEnter = (screenWidth - textWidthEnter) / 2;
+        int textYEnter = (textWidth / 2) + 80;
+        DrawText(enterText, textXEnter, textYEnter, 20, DARKGRAY);
+        DrawText(bottleSuccessful.c_str(), textX, textY, 20, DARKGRAY);
+    }
+    else if (waterBottle == false && waterTabs == false && successful == false) {
+        int textWidth = MeasureText(failWater.c_str(), 20);
+        int textX = (screenWidth - textWidth) / 2;
+        int textY = (textX / 2);
+        const char* enterText = "Hit enter to escape";
+        int textWidthEnter = MeasureText(enterText, 20);
+        int textXEnter = (screenWidth - textWidthEnter) / 2;
+        int textYEnter = (textWidth / 2) + 80;
+        DrawText(enterText, textXEnter, textYEnter, 20, DARKGRAY);
+        DrawText(failWater.c_str(), textX, textY, 20, DARKGRAY);
+    }
+    else if (waterBottle == false && waterTabs == false && successful == true) {
+        int textWidth = MeasureText(successfulWater.c_str(), 20);
+        int textX = (screenWidth - textWidth) / 2;
+        int textY = (textX / 2);
+        const char* enterText = "Hit enter to escape";
+        int textWidthEnter = MeasureText(enterText, 20);
+        int textXEnter = (screenWidth - textWidthEnter) / 2;
+        int textYEnter = (textWidth / 2) + 80;
+        DrawText(enterText, textXEnter, textYEnter, 20, DARKGRAY);
+        DrawText(successfulWater.c_str(), textX, textY, 20, DARKGRAY);
+    }
+    else {
+        int textWidth = MeasureText(fallBack.c_str(), 20);
+        int textX = (screenWidth - textWidth) / 2;
+        int textY = (textX / 2);
+        const char* enterText = "Hit enter to escape";
+        int textWidthEnter = MeasureText(enterText, 20);
+        int textXEnter = (screenWidth - textWidthEnter) / 2;
+        int textYEnter = (textWidth / 2) + 80;
+        DrawText(enterText, textXEnter, textYEnter, 20, DARKGRAY);
+        DrawText(fallBack.c_str(), textX, textY, 20, DARKGRAY);
+    }
+} // End drinkMessage
 
 // End screens.cpp
