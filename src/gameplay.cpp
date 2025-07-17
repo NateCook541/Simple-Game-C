@@ -9,6 +9,7 @@
 #include "eat.h"
 #include "drink.h"
 #include "consumables.h"
+#include "tips.h"
 #include <string>
 
 void mainGameLoop() {
@@ -55,11 +56,12 @@ void mainGameLoop() {
 
     // MAIN GAME LOOP
 
-    // V1.1
-    // BUG FIXES
-    // First aid kit changes
+    // V2 UPDATES
     // Allow for boiling water
     // Add tips menu
+    // Update mini games to make them mean something
+    // Update travel menu to make travel a game
+    // Energy system
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -101,8 +103,13 @@ void mainGameLoop() {
                 InputManager::resetInput();
                 displayInventory();
             }
-            // Quit
+            // Tips menu
             else if (userChoice == 7) {
+                InputManager::resetInput();
+                tips(map);
+            }
+            // Quit
+            else if (userChoice == 8) {
                 break;
             }
         }
