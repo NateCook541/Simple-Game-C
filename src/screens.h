@@ -10,6 +10,7 @@ void displayMainMenuArt();
 // Display choices screens and Getters
 void displayMainOptions();
 void displayTravelOptions();
+void displayLodgeSellBuy();
 void displayLodgeBuyOptions();
 void displayLodgeBuyOptionsTwo();
 void displayEatCookEat();

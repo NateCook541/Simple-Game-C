@@ -8,6 +8,7 @@
 #include "campingItems.h"
 #include "consumables.h"
 #include <string>
+#include <vector>
 
 // BASIC SCREENS
 
@@ -39,8 +40,9 @@ void displayMainOptions() {
     DrawText("4. Drink", 100, 190, 20, DARKGRAY);
     DrawText("5. Display stats", 100, 220, 20, DARKGRAY);
     DrawText("6. Display inventory", 100, 250, 20, DARKGRAY);
-    DrawText("7. Quit", 100, 280, 20, DARKGRAY);
-    DrawText("Enter your choice: ", 100, 320, 20, DARKGRAY);
+    DrawText("7. Display map", 100, 280, 20, DARKGRAY);
+    DrawText("8. Quit", 100, 310, 20, DARKGRAY);
+    DrawText("Enter your choice: ", 100, 340, 20, DARKGRAY);
 } // End displayMainOptions
 
 void displayTravelOptions() {
@@ -57,26 +59,28 @@ void displayTravelOptions() {
 
 void displayMainMenuArt() {
 
-    const char* lakeArtMenuScreen = 
-    R"(
-                                        .---.
-                      .----------------'     '-----------------.
-                  .--'                                          '---.
-               .-'                                                   '-.
-             .'                                                        '.
-            /                                                            \
-            |                                                             |
-            |                                                             |
-             \                                                           /
-              '.                                                       .'
-                '-._                                               _.-'
-                    '---------------------------------------------'
-    )";
+    std::vector<std::string> lakeArt = {
+        "                    .---.",
+        "                .-------'     '-------.",
+        "            .--'                     '--.",
+        "        .'                             '.",
+        "        /                                 \\",
+        "        |                                   |",
+        "        |                                   |",
+        "        \\                                 /",
+        "        '.                             .'",
+        "            '--._                   _.--'",
+        "                '-------------------'"
+    };
 
-    int textWidth = MeasureText(lakeArtMenuScreen, 16);
-    int textX = screenWidth - textWidth - 20;
+    int startX = screenWidth - 400; // Adjust as needed
+    int startY = 50;
+    int lineHeight = 20; // Adjust based on font size
 
-    DrawText(lakeArtMenuScreen, textX, 50, 16, DARKGRAY);
+    for (int i = 0; i < lakeArt.size(); i++) {
+        DrawText(lakeArt[i].c_str(), startX, startY + (i * lineHeight), 16, DARKGRAY);
+    }
+
 } // End displayMainMenuArt
 
 int getUserChoice() {
@@ -147,6 +151,16 @@ void displayStats() {
 } // End displayStats
 
 // LODGE SCREENS
+
+void displayLodgeSellBuy() {
+    ClearBackground(RAYWHITE);
+    // Display the options
+    DrawText("1. - Buy", 100, 100, 20, DARKGRAY);
+    DrawText("2. - Sell", 100, 130, 20, DARKGRAY);
+    DrawText("3. Back", 100, 160, 20, DARKGRAY);
+    // Prompt for user input
+    DrawText("Enter your choice: ", 100, 420, 20, DARKGRAY);
+} // End displayLodgeSellBuy
 
 void displayLodgeBuyOptions() {
     ClearBackground(RAYWHITE);

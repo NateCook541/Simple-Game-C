@@ -18,6 +18,14 @@ class InputManager {
         static void markProcessed() {
             processed = true;
         }
+        static void clearInputQueue() {
+            while (GetKeyPressed() != 0) {
+
+            }
+    
+            BeginDrawing();
+            EndDrawing();
+        }
 };
 
 inline int InputManager::lastKey = 0;

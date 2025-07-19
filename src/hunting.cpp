@@ -4,6 +4,7 @@
 #include "config.h"
 #include "raylib.h"
 #include "screens.h"
+#include "inputManager.h"
 #include <string>
 #include <vector>
 #include <random>

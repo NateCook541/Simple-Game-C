@@ -9,7 +9,7 @@
 #include "eat.h"
 #include "drink.h"
 #include "consumables.h"
-#include "tips.h"
+#include "map.h"
 #include <string>
 
 void mainGameLoop() {
@@ -57,19 +57,15 @@ void mainGameLoop() {
     // MAIN GAME LOOP
 
     // V2 UPDATES
-    // Allow for boiling water
-    // Add tips menu
     // Update mini games to make them mean something
-    // Update travel menu to make travel a game
-    // Energy system
+    // Fix main menu art
 
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         displayMainOptions();
 
-        // FIX IN GRAPHICS UPDATE
-        // displayMainMenuArt();
+        displayMainMenuArt();
 
         int userChoice = getUserChoice();
         if (userChoice != 0) {
@@ -106,7 +102,7 @@ void mainGameLoop() {
             // Tips menu
             else if (userChoice == 7) {
                 InputManager::resetInput();
-                tips(map);
+                mapFunc(map);
             }
             // Quit
             else if (userChoice == 8) {
