@@ -8,8 +8,7 @@
 
 bool cookMiniGame(CampingItems& lighter) {
     float currentProgress = 0.0f;
-    float progressGoal = 100.0f;
-    float timer = 10.0f;
+    float progressGoal = 500.0f;
     bool gameResult = false;
     bool gameEnded = false;
     while (!WindowShouldClose() && !gameEnded) {
@@ -20,25 +19,16 @@ bool cookMiniGame(CampingItems& lighter) {
             currentProgress += 10.0f;
         }
 
-        timer -= GetFrameTime();
         DrawRectangle(100, 250, (int)currentProgress, 20, GREEN);
         DrawRectangleLines(100, 250, (int)progressGoal, 20, BLACK);
 
-        std::string timerText = "Time left: " + std::to_string((int)timer) + "s";
-        DrawText(timerText.c_str(), 100, 300, 20, DARKGRAY);
-        
+
         if (currentProgress >= progressGoal) {
             DrawText("You have started the fire!", 100, 350, 20, GREEN);
             gameResult = true;
             gameEnded = true;
         }
-        else if (timer <= 0) {
-            DrawText("The fire did not start. Try again!", 100, 350, 20, GREEN);
-            gameResult = false;
-            gameEnded = true;
-        }
         EndDrawing();
-
         if (gameEnded) {
             float waitTime = 0.0f;
             while (waitTime < 2.0f && !IsKeyPressed(KEY_ENTER)) {
@@ -152,4 +142,3 @@ void eatConsumableFood() {
         InputManager::resetInput();
     }
 }
-

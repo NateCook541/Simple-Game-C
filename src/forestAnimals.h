@@ -30,7 +30,8 @@ class ForestAnimals : public Animal {
                 chosenType = forestAnimalType[3];
             }
             else {
-                chosenType = "Unknown";
+                // Fall back animal
+                chosenType = "Hedgehog";
             }
             return ForestAnimals(chosenType, w, h);
         }

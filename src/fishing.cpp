@@ -9,9 +9,18 @@
 #include <random>
 
 Fish fishingMiniGame(CampingItems& shitRod, CampingItems& goodRod, bool northSouthFishing) {
+    // Base variables
     float currentProgress = 0.0f;
-    float progressGoal = 100.0f;
+    float progressGoal = 250.0f;
     float timer = 10.0f;
+    float lastIncrease = timer;
+
+    if (goodRod.getOwned()) {
+        progressGoal = 150.0f;
+    } else if (shitRod.getOwned()) {
+        progressGoal = 250.0f;
+    }
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -21,6 +30,13 @@ Fish fishingMiniGame(CampingItems& shitRod, CampingItems& goodRod, bool northSou
         }
 
         timer -= GetFrameTime();
+
+        // Decrease progress every 2 seconds
+        if (lastIncrease - timer >= 2.0f) {
+            currentProgress -= 25.0f;
+            lastIncrease = timer;
+        }
+
         DrawRectangle(100, 250, (int)currentProgress, 20, GREEN);
         DrawRectangleLines(100, 250, (int)progressGoal, 20, BLACK);
         std::string timerText = "Time left: " + std::to_string((int)timer) + "s";

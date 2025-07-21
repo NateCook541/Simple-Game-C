@@ -17,6 +17,17 @@ struct Location {
     } type;
 };
 
+// Objects in travel screen (This code is really starting to lose focus)
+enum ObstacleType {
+    TREE, ROCK
+};
+
+// Another struct, at least this one makes more sense but still this code really is shit
+struct Obstacle {
+    Rectangle rect;
+    ObstacleType type;
+};
+
 void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, CampingItems& goodRod, CampingItems& map, CampingItems& shitRifle, CampingItems& goodRifle, CampingItems& lighter, CampingItems& smallBackPack, CampingItems& largeBackPack, CampingItems& waterBottle, Consumables& firstAidKit, Consumables& waterPurificationTabs, Consumables& candyBar, Consumables& jerky, Consumables& bottledWater) {
     // Map and player marker setup
     int mapleft = 100;
@@ -29,6 +40,21 @@ void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, Campin
 
     float speed = 2.0f;
 
+    // Obstacle generation
+    const int maxObstacles = 10;
+    Obstacle obstacles[maxObstacles];
+    
+    for (int i = 0; i < maxObstacles; i++) {
+        float w = GetRandomValue(20, 40);
+        float h = GetRandomValue(20, 40);
+        float x = GetRandomValue(mapleft + 10, mapleft + mapW - (int)w - 10);
+        float y = GetRandomValue(mapTop + 10, mapTop + mapH - (int)h - 10);
+        
+        ObstacleType type = (GetRandomValue(0, 1) == 0) ? TREE : ROCK;
+
+        obstacles[i] = { {x, y, w, h}, type};
+    }
+
     // Make array of where locations are
     Location locations[] = {
         {"Lodge", {mapleft+270, mapTop+130, 60, 40}, false, Location::LODGE},
@@ -40,6 +66,11 @@ void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, Campin
     int locationCount = sizeof(locations)/sizeof(locations[0]);
 
     while (!WindowShouldClose()) {
+
+        // Previous position
+        float prevX = playerX;
+        float prevY = playerY;
+
         // Player movement
         if (IsKeyDown(KEY_RIGHT)) playerX += speed;
         if (IsKeyDown(KEY_LEFT)) playerX -= speed;
@@ -52,6 +83,16 @@ void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, Campin
         if (playerY < mapTop) playerY = mapTop;
         if (playerY > mapTop+mapH) playerY = mapTop+mapH;
         
+        // Check for if player hits obstacle
+        Rectangle playerRect = { playerX - 4, playerY - 4, 8, 8 };
+        for (int i = 0; i < maxObstacles; i++) {
+            if (CheckCollisionRecs(playerRect, obstacles[i].rect)) {
+                playerX = prevX;
+                playerY = prevY;
+                break;
+            }
+        }
+
         // Start drawing
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -65,6 +106,12 @@ void travel(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, Campin
             }
             DrawRectangleRec(locations[i].area, Fade(GREEN, 0.2f));
             DrawText(locations[i].name, locations[i].area.x+5, locations[i].area.y+5, 16, DARKGRAY);
+        }
+
+        // Draw obstacles
+        for (int i = 0; i < maxObstacles; i++) {
+            Color color = (obstacles[i].type == TREE) ? DARKGREEN : GRAY;
+            DrawRectangleRec(obstacles[i].rect, color);
         }
 
         // Player

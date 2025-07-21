@@ -30,7 +30,8 @@ class Fish : public Animal {
                 chosenType = fishTypes[3];
             }
             else {
-                chosenType = "Unknown";
+                // Fallback fish (I know it doesn't make sense, but I needed something to fall back that isn't unknown)
+                chosenType = "Rainbow Trout";
             }
             return Fish(chosenType, w, l);
         }

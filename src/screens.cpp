@@ -14,7 +14,7 @@
 
 void welcomeScreen() {
     // Variables
-    const char* welcomeText = "Welcome (Change later)";
+    const char* welcomeText = "Welcome to Fish Lake";
     int textWidth = MeasureText(welcomeText, 20);
     int textX = (screenWidth - textWidth) / 2;
     int textY = (textX / 2);
@@ -56,32 +56,6 @@ void displayTravelOptions() {
     DrawText("7. Back", 100, 280, 20, DARKGRAY);
     DrawText("Enter your choice: ", 100, 320, 20, DARKGRAY);
 } // End displayTravelOptions
-
-void displayMainMenuArt() {
-
-    std::vector<std::string> lakeArt = {
-        "                    .---.",
-        "                .-------'     '-------.",
-        "            .--'                     '--.",
-        "        .'                             '.",
-        "        /                                 \\",
-        "        |                                   |",
-        "        |                                   |",
-        "        \\                                 /",
-        "        '.                             .'",
-        "            '--._                   _.--'",
-        "                '-------------------'"
-    };
-
-    int startX = screenWidth - 400; // Adjust as needed
-    int startY = 50;
-    int lineHeight = 20; // Adjust based on font size
-
-    for (int i = 0; i < lakeArt.size(); i++) {
-        DrawText(lakeArt[i].c_str(), startX, startY + (i * lineHeight), 16, DARKGRAY);
-    }
-
-} // End displayMainMenuArt
 
 int getUserChoice() {
     // Check ready to accept input

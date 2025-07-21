@@ -55,17 +55,11 @@ void mainGameLoop() {
     Consumables firstAidKit("First Aid Kit", 25, 0, 0, 0);
 
     // MAIN GAME LOOP
-
-    // V2 UPDATES
-    // Update mini games to make them mean something
-    // Fix main menu art
-
     while (!WindowShouldClose()) {
+
         BeginDrawing();
         ClearBackground(RAYWHITE);
         displayMainOptions();
-
-        displayMainMenuArt();
 
         int userChoice = getUserChoice();
         if (userChoice != 0) {
