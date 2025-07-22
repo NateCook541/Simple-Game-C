@@ -347,7 +347,7 @@ void displayWhatEatenConsumables(int index) {
 
 // INVENTORY
 
-void displayInventory() {
+void displayInventory(Consumables& firstAidKit) {
     int page = 0;
     const int itemsPerPage = 5;
     int totalItems = animalInventory.size() + itemsInventory.size() + consumablesInventory.size();
@@ -411,6 +411,29 @@ void displayInventory() {
 
         std::string pageText = "Use LEFT/RIGHT to change page. Press ENTER or 9 to go back.";
         DrawText(pageText.c_str(), 100, y + 20, 20, DARKGRAY);
+
+        // First aid kit selection
+        int choice = getUserChoice();
+        int indexReal = startIndex + (choice - 1);
+
+        if (indexReal >= animalInventory.size() + itemsInventory.size() && indexReal < animalInventory.size() + itemsInventory.size() + consumablesInventory.size()) {
+            int firstAidId = indexReal - animalInventory.size() - itemsInventory.size();
+            if (consumablesInventory[firstAidId]->getNameCon() == "First Aid Kit" && consumablesInventory[firstAidId]->getQty() > 0) {
+                playerHealth++;
+                firstAidKit.removeQty();
+                std::string firstAidSaveText = "You used your first aid kit have regained one health point!";
+                while (!WindowShouldClose()) {
+                    BeginDrawing();
+                    ClearBackground(RAYWHITE);
+                    death(firstAidSaveText);
+                    enterDeath();
+                    EndDrawing();
+                    if (IsKeyPressed(KEY_ENTER)) {
+                        break;
+                    }
+                }
+            }
+        }
 
         EndDrawing();
 

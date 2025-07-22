@@ -1,5 +1,6 @@
 #pragma once
 #include "campingItems.h"
+#include "consumables.h"
 #include <string>
 
 // Welcome screens
@@ -24,7 +25,7 @@ void drinkMessage(bool waterBottle, bool waterTabs, bool successful);
 
 // Display stats and inventory
 void displayStats();
-void displayInventory();
+void displayInventory(Consumables& firstAidKit);
 void displayFullInventory(CampingItems& smallBackPack, CampingItems& largeBackPack);
 
 // Ending screens

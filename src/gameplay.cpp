@@ -91,7 +91,7 @@ void mainGameLoop() {
              // Display inventory
             else if (userChoice == 6) {
                 InputManager::resetInput();
-                displayInventory();
+                displayInventory(firstAidKit);
             }
             // Tips menu
             else if (userChoice == 7) {

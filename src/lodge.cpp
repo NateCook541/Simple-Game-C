@@ -43,6 +43,7 @@ void lodgeBuy(CampingItems& tent, CampingItems& cot, CampingItems& shitRod, Camp
                 if (buyChoice == 1) { purchaseScreen(largeBackPack, "Large backpack"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(largeBackPack)); }
                 else if (buyChoice == 2) { purchaseScreen(smallBackPack, "Small backpack"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(smallBackPack)); }
                 else if (buyChoice == 3) { purchaseScreen(waterBottle, "Water Bottle"); InputManager::resetInput(); itemsInventory.push_back(new CampingItems(waterBottle)); }
+                // CONSUMABLES
                 else if (buyChoice == 4) { 
                     purchaseConsumablesScreen(jerky, "Jerky"); 
                     InputManager::resetInput(); 

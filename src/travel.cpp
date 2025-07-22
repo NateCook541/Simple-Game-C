@@ -17,12 +17,12 @@ struct Location {
     } type;
 };
 
-// Objects in travel screen (This code is really starting to lose focus)
+// Object types in travel screen
 enum ObstacleType {
     TREE, ROCK
 };
 
-// Another struct, at least this one makes more sense but still this code really is shit
+// Another struct, at least this one makes more sense but still this code is really shit
 struct Obstacle {
     Rectangle rect;
     ObstacleType type;
