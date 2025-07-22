@@ -8,12 +8,13 @@
 #include "campingItems.h"
 #include "consumables.h"
 #include <string>
+#include <vector>
 
 // BASIC SCREENS
 
 void welcomeScreen() {
     // Variables
-    const char* welcomeText = "Welcome (Change later)";
+    const char* welcomeText = "Welcome to Fish Lake";
     int textWidth = MeasureText(welcomeText, 20);
     int textX = (screenWidth - textWidth) / 2;
     int textY = (textX / 2);
@@ -39,8 +40,9 @@ void displayMainOptions() {
     DrawText("4. Drink", 100, 190, 20, DARKGRAY);
     DrawText("5. Display stats", 100, 220, 20, DARKGRAY);
     DrawText("6. Display inventory", 100, 250, 20, DARKGRAY);
-    DrawText("7. Quit", 100, 280, 20, DARKGRAY);
-    DrawText("Enter your choice: ", 100, 320, 20, DARKGRAY);
+    DrawText("7. Display map", 100, 280, 20, DARKGRAY);
+    DrawText("8. Quit", 100, 310, 20, DARKGRAY);
+    DrawText("Enter your choice: ", 100, 340, 20, DARKGRAY);
 } // End displayMainOptions
 
 void displayTravelOptions() {
@@ -54,30 +56,6 @@ void displayTravelOptions() {
     DrawText("7. Back", 100, 280, 20, DARKGRAY);
     DrawText("Enter your choice: ", 100, 320, 20, DARKGRAY);
 } // End displayTravelOptions
-
-void displayMainMenuArt() {
-
-    const char* lakeArtMenuScreen = 
-    R"(
-                                        .---.
-                      .----------------'     '-----------------.
-                  .--'                                          '---.
-               .-'                                                   '-.
-             .'                                                        '.
-            /                                                            \
-            |                                                             |
-            |                                                             |
-             \                                                           /
-              '.                                                       .'
-                '-._                                               _.-'
-                    '---------------------------------------------'
-    )";
-
-    int textWidth = MeasureText(lakeArtMenuScreen, 16);
-    int textX = screenWidth - textWidth - 20;
-
-    DrawText(lakeArtMenuScreen, textX, 50, 16, DARKGRAY);
-} // End displayMainMenuArt
 
 int getUserChoice() {
     // Check ready to accept input
@@ -147,6 +125,16 @@ void displayStats() {
 } // End displayStats
 
 // LODGE SCREENS
+
+void displayLodgeSellBuy() {
+    ClearBackground(RAYWHITE);
+    // Display the options
+    DrawText("1. - Buy", 100, 100, 20, DARKGRAY);
+    DrawText("2. - Sell", 100, 130, 20, DARKGRAY);
+    DrawText("3. Back", 100, 160, 20, DARKGRAY);
+    // Prompt for user input
+    DrawText("Enter your choice: ", 100, 420, 20, DARKGRAY);
+} // End displayLodgeSellBuy
 
 void displayLodgeBuyOptions() {
     ClearBackground(RAYWHITE);
@@ -359,7 +347,7 @@ void displayWhatEatenConsumables(int index) {
 
 // INVENTORY
 
-void displayInventory() {
+void displayInventory(Consumables& firstAidKit) {
     int page = 0;
     const int itemsPerPage = 5;
     int totalItems = animalInventory.size() + itemsInventory.size() + consumablesInventory.size();
@@ -423,6 +411,29 @@ void displayInventory() {
 
         std::string pageText = "Use LEFT/RIGHT to change page. Press ENTER or 9 to go back.";
         DrawText(pageText.c_str(), 100, y + 20, 20, DARKGRAY);
+
+        // First aid kit selection
+        int choice = getUserChoice();
+        int indexReal = startIndex + (choice - 1);
+
+        if (indexReal >= animalInventory.size() + itemsInventory.size() && indexReal < animalInventory.size() + itemsInventory.size() + consumablesInventory.size()) {
+            int firstAidId = indexReal - animalInventory.size() - itemsInventory.size();
+            if (consumablesInventory[firstAidId]->getNameCon() == "First Aid Kit" && consumablesInventory[firstAidId]->getQty() > 0) {
+                playerHealth++;
+                firstAidKit.removeQty();
+                std::string firstAidSaveText = "You used your first aid kit have regained one health point!";
+                while (!WindowShouldClose()) {
+                    BeginDrawing();
+                    ClearBackground(RAYWHITE);
+                    death(firstAidSaveText);
+                    enterDeath();
+                    EndDrawing();
+                    if (IsKeyPressed(KEY_ENTER)) {
+                        break;
+                    }
+                }
+            }
+        }
 
         EndDrawing();
 

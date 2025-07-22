@@ -8,7 +8,7 @@
 #include <vector>
 
 // Global variable declarations
-int playerHealth = 100; // (TESTING)
+int playerHealth = 3;
 int playerHunger = 100;
 int playerThirst = 100;
 int playerMoney = 100;
@@ -20,7 +20,7 @@ std::vector<Consumables*> consumablesInventory;
 // Functions
 
 void configureWindow() {
-    InitWindow(screenWidth, screenHeight, "Game V3");
+    InitWindow(screenWidth, screenHeight, "Fish Lake");
     SetTargetFPS(60);
 } // End configureWindow
 

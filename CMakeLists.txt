@@ -16,7 +16,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(raylib)
 
 # Define the executable
-add_executable(gameV3 src/main.cpp src/config.cpp src/screens.cpp src/gameplay.cpp src/campingItems.cpp src/sleep.cpp src/travel.cpp src/lodge.cpp src/fishing.cpp src/eat.cpp src/hunting.cpp src/drink.cpp src/consumables.cpp)
+add_executable(gameV3 src/main.cpp src/config.cpp src/screens.cpp src/gameplay.cpp src/campingItems.cpp src/sleep.cpp src/travel.cpp src/lodge.cpp src/fishing.cpp src/eat.cpp src/hunting.cpp src/drink.cpp src/consumables.cpp src/map.cpp)
 
 # Link raylib
 target_link_libraries(gameV3 raylib)

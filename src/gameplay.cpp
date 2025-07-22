@@ -9,6 +9,7 @@
 #include "eat.h"
 #include "drink.h"
 #include "consumables.h"
+#include "map.h"
 #include <string>
 
 void mainGameLoop() {
@@ -54,20 +55,11 @@ void mainGameLoop() {
     Consumables firstAidKit("First Aid Kit", 25, 0, 0, 0);
 
     // MAIN GAME LOOP
-
-    // V1.1
-    // BUG FIXES
-    // First aid kit changes
-    // Allow for boiling water
-    // Add tips menu
-
     while (!WindowShouldClose()) {
+
         BeginDrawing();
         ClearBackground(RAYWHITE);
         displayMainOptions();
-
-        // FIX IN GRAPHICS UPDATE
-        // displayMainMenuArt();
 
         int userChoice = getUserChoice();
         if (userChoice != 0) {
@@ -99,10 +91,15 @@ void mainGameLoop() {
              // Display inventory
             else if (userChoice == 6) {
                 InputManager::resetInput();
-                displayInventory();
+                displayInventory(firstAidKit);
+            }
+            // Tips menu
+            else if (userChoice == 7) {
+                InputManager::resetInput();
+                mapFunc(map);
             }
             // Quit
-            else if (userChoice == 7) {
+            else if (userChoice == 8) {
                 break;
             }
         }
